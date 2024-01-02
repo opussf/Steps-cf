@@ -1,0 +1,20 @@
+## Title: Steps
+## Interface: 100200
+## Notes: Steps (1.9)
+## Author: opussf
+## Version: 1.9
+## Description: Track how many steps you have taken
+## Description-frFR: Displays a message greeting France
+## Description-deDE: Displays a message greeting Germany
+## Description-esES: Displays a message greeting Spanish
+## Description-esMX: Displays a message greeting Mexico
+## SavedVariables: Steps_data Steps_options
+localization_core.lua
+localization_de.lua
+localization_fr.lua
+localization_es.lua
+localization_pt.lua
+Steps.lua
+Steps.xml
+
+StepsChat.lua
