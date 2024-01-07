@@ -1,4 +1,4 @@
--- STEPS 1.9
+-- STEPS 1.10
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -35,12 +35,15 @@ function STEPS.OnLoad()
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
 	Steps_Frame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
 	Steps_Frame:RegisterEvent( "CHAT_MSG_ADDON" )
+	Steps_Frame:RegisterEvent( "GROUP_ROSTER_UPDATE" )
+	Steps_Frame:RegisterEvent( "INSTANCE_GROUP_SIZE_CHANGED" )
 end
 function STEPS.ADDON_LOADED()
 	Steps_Frame:UnregisterEvent( "ADDON_LOADED" )
 	STEPS.name = UnitName("player")
 	STEPS.realm = GetRealmName()
 	STEPS.msgRealm = string.gsub( STEPS.realm, " ", "" )
+	TooltipDataProcessor.AddTooltipPostCall( Enum.TooltipDataType.Unit, STEPS.TooltipSetUnit )
 end
 function STEPS.VARIABLES_LOADED()
 	-- Unregister the event for this method.
@@ -61,7 +64,7 @@ function STEPS.VARIABLES_LOADED()
 		STEPS.InitChat()
 	end
 end
-function STEPS.LOADING_SCREEN_DISABLED()
+function STEPS.SendMessages()
 	if not C_ChatInfo.IsAddonMessagePrefixRegistered(STEPS.commPrefix) then
 		C_ChatInfo.RegisterAddonMessagePrefix(STEPS.commPrefix)
 	end
@@ -76,8 +79,11 @@ function STEPS.LOADING_SCREEN_DISABLED()
 	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "INSTANCE_CHAT" )
 	end
-	STEPS.totalK = math.floor( STEPS.mine.steps / 1000 )
+	STEPS.totalC = math.floor( STEPS.mine.steps / 100 )
 end
+STEPS.LOADING_SCREEN_DISABLED = STEPS.SendMessages
+STEPS.GROUP_ROSTER_UPDATE = STEPS.SendMessages
+STEPS.INSTANCE_GROUP_SIZE_CHANGED = STEPS.SendMessages
 function STEPS.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
 	-- STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
@@ -196,7 +202,7 @@ function STEPS.OnUpdate()
 		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ).." ("..STEPS.ave..":"..STEPS.max..")" )
 	end
 	STEPS.lastUpdate = nowTS
-	if math.floor( STEPS.mine.steps / 1000 ) > STEPS.totalK then
+	if math.floor( STEPS.mine.steps / 100 ) > STEPS.totalC then
 		STEPS.LOADING_SCREEN_DISABLED()
 	end
 end
@@ -313,6 +319,27 @@ function STEPS.UIReset()
 	Steps_Frame:ClearAllPoints()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
 end
+-- Tooltip
+function STEPS.TooltipSetUnit( arg1, arg2 )
+	local name = GameTooltip:GetUnit()
+	local realm = ""
+	if UnitName( "mouseover" ) == name then
+		_, realm = UnitName( "mouseover" )
+		if not realm then
+			realm = GetRealmName()
+		end
+	end
+	if name and Steps_data[realm] and Steps_data[realm][name] then
+		for dayBack=-1,1 do
+			local dateStr = date("%Y%m%d", time() - (dayBack*86400))
+			if Steps_data[realm][name][dateStr] then
+				today = Steps_data[realm][name][dateStr].steps
+			end
+		end
+		GameTooltip:AddLine( "Steps today: "..today.." total: "..math.floor( Steps_data[realm][name].steps ) )
+	end
+end
+
 STEPS.commandList = {
 	[STEPS.L["help"]] = {
 		["func"] = STEPS.PrintHelp,
@@ -343,7 +370,9 @@ STEPS.commandList = {
 	[STEPS.L["chat"]] = {
 		["func"] = function() Steps_options.enableChat = not Steps_options.enableChat;
 						if Steps_options.enableChat then
-							STEPS.InitChat()
+							if not STEPS.OriginalSendChatMessage then
+								STEPS.InitChat()
+							end
 							STEPS.Print(STEPS.L["{steps} now enabled."])
 						else
 							STEPS.Print(STEPS.L["Please /reload to disable chat integration."])

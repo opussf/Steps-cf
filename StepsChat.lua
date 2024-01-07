@@ -1,4 +1,4 @@
--- StepsChat.lua 1.9
+-- StepsChat.lua 1.10
 
 function STEPS.InitChat()
 	STEPS.OriginalSendChatMessage = SendChatMessage
@@ -12,6 +12,7 @@ end
 function STEPS.ReplaceMessage( msgIn )
 	-- search for and replace {FB}
 	--print( "msgIn: "..msgIn )
+	STEPS.SendMessages()
 	msgNew = nil
 	local tokenStart, tokenEnd  = strfind( msgIn, "{[sS][tT][eE][pP][sS]*}" )
 	if tokenStart then

@@ -1,7 +1,11 @@
-Changes since 1.9..
+Changes since 1.10..
 
-* 14839be 2024-01-01 22:49:36 -0800 -  (HEAD -> master, tag: 1.9) Merge branch 'develop' <opussf>
-* 49c881b 2024-01-01 22:49:12 -0800 -  (develop) Merge branch 'disableChat' into develop <opussf>
-* 1fd8d86 2024-01-01 22:47:00 -0800 -  Img and Readme <opussf>
-* 9de2b2f 2023-12-31 12:11:34 -0800 -  Debating having 'help' entry here.  No help hides the option. <opussf>
-* a90af61 2023-12-31 11:18:02 -0800 -  Disable chat {} until requested. <opussf>
+* 258751f 2024-01-07 00:20:02 -0800 -  (HEAD -> master, tag: 1.10, origin/master, origin/develop, develop) Merge branch 'develop' <opussf>
+* 867f546 2024-01-07 00:12:12 -0800 -  Merge branch 'partyChange' into develop <opussf>
+* 17504b4 2024-01-07 00:11:47 -0800 -  Tests that are less time dependent <opussf>
+* 5d62d65 2024-01-06 23:12:10 -0800 -  Show Today (from yesterday to tomorrow). <opussf>
+* c6487e5 2024-01-06 22:11:43 -0800 -  100 steps, and only show total for now. <opussf>
+* 9528880 2024-01-06 20:50:09 -0800 -  Floor the values <opussf>
+* a849083 2024-01-06 20:44:36 -0800 -  Show their steps on tooltip <opussf>
+* 896629d 2024-01-06 16:03:27 -0800 -  Enable changes <opussf>
+* 25d3d19 2024-01-03 23:23:26 -0800 -  2 new events to send info at <opussf>
