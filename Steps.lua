@@ -1,4 +1,4 @@
--- STEPS 1.10
+-- STEPS 1.10.1
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -331,7 +331,7 @@ function STEPS.TooltipSetUnit( arg1, arg2 )
 	end
 	if name and Steps_data[realm] and Steps_data[realm][name] then
 		for dayBack=-1,1 do
-			local dateStr = date("%Y%m%d", time() - (dayBack*86400))
+			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
 			if Steps_data[realm][name][dateStr] then
 				today = Steps_data[realm][name][dateStr].steps
 			end
