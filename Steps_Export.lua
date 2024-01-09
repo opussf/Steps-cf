@@ -28,8 +28,8 @@ function ExportXML()
 	strOut = "<?xml version='1.0' encoding='utf-8' ?>\n"
 	strOut = strOut .. "<steps>\n"
 
-	for realm, chars in pairs( Steps_data ) do
-		for name, c in pairs( chars ) do
+	for realm, chars in sorted_pairs( Steps_data ) do
+		for name, c in sorted_pairs( chars ) do
 			strOut = strOut .. string.format( "<char realm=\"%s\" name=\"%s\" steps=\"%s\">\n", realm, name, math.ceil( c.steps ) )
 			for date, dateStruct in pairs( c ) do
 				if string.len(date) == 8 then
@@ -47,8 +47,8 @@ function ExportJSON()
 	strOut = "{\"steps\": [\n"
 
 	charsOut = {}
-	for realm, chars in pairs( Steps_data ) do
-		for name, c in pairs( chars ) do
+	for realm, chars in sorted_pairs( Steps_data ) do
+		for name, c in sorted_pairs( chars ) do
 			charOut = {}
 			table.insert( charOut, string.format( "\t{\"realm\":\"%s\", \"name\":\"%s\", \"steps\":%s, \"days\":[", realm, name, math.ceil( c.steps ) ) )
 			days = {}
@@ -66,7 +66,19 @@ function ExportJSON()
 
 	return strOut
 end
-
+function sorted_pairs( tableIn )
+	local keys = {}
+	for k in pairs( tableIn ) do table.insert( keys, k ) end
+	table.sort( keys )
+	local lcv = 0
+	local iter = function()
+		lcv = lcv + 1
+		if keys[lcv] == nil then return nil
+		else return keys[lcv], tableIn[keys[lcv]]
+		end
+	end
+	return iter
+end
 
 functionList = {
 	["xml"] = ExportXML,

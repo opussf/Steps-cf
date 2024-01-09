@@ -1,9 +1,7 @@
-Changes since 1.10.1..
+Changes since 1.11..
 
-* 817c609 2024-01-08 02:59:48 -0800 -  (HEAD -> master, tag: 1.10.1) Merge branch 'develop' <opussf>
-*   f5b7373 2024-01-08 02:59:24 -0800 -  (develop) Merge branch 'tests' into develop <opussf>
-|\  
-| * 6ddc9db 2024-01-08 02:58:56 -0800 -  (tests) Back to original, with + <opussf>
-| * 6121f67 2024-01-08 02:47:29 -0800 -  Tests for getting data from the future timezone. <opussf>
-|/  
-* 90a2380 2024-01-07 00:37:27 -0800 -  (origin/translations, origin/develop, translations) .gitignore update :octocat: <opussf>
+* 16e02da 2024-01-08 19:40:41 -0800 -  (HEAD -> master, tag: 1.11, origin/master) Merge pull request #1 from opussf/develop <opussf>
+* 0016ea5 2024-01-08 19:29:12 -0800 -  (origin/develop, develop) Merge branch 'targetDropdown' into develop <opussf>
+* dffd917 2024-01-08 19:28:42 -0800 -  FEATURE <opussf>
+* 2d2a364 2024-01-08 18:06:02 -0800 -  Dropdown menu, title, and data, export json works again. <opussf>
+* 5b3e6a8 2024-01-08 15:43:32 -0800 -  Dropdown, and function <opussf>

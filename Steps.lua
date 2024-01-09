@@ -1,4 +1,4 @@
--- STEPS 1.10.1
+-- STEPS 1.11
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -319,6 +319,17 @@ function STEPS.UIReset()
 	Steps_Frame:ClearAllPoints()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
 end
+function STEPS.GetTodayTotal( name, realm )
+	if name and Steps_data[realm] and Steps_data[realm][name] then
+		for dayBack = -1,1 do
+			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
+			if Steps_data[realm][name][dateStr] then
+				today = Steps_data[realm][name][dateStr].steps
+			end
+		end
+		return math.floor( today ), math.floor( Steps_data[realm][name].steps )
+	end
+end
 -- Tooltip
 function STEPS.TooltipSetUnit( arg1, arg2 )
 	local name = GameTooltip:GetUnit()
@@ -329,17 +340,41 @@ function STEPS.TooltipSetUnit( arg1, arg2 )
 			realm = GetRealmName()
 		end
 	end
-	if name and Steps_data[realm] and Steps_data[realm][name] then
-		for dayBack=-1,1 do
-			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
-			if Steps_data[realm][name][dateStr] then
-				today = Steps_data[realm][name][dateStr].steps
-			end
-		end
-		GameTooltip:AddLine( "Steps today: "..today.." total: "..math.floor( Steps_data[realm][name].steps ) )
+	today, total = STEPS.GetTodayTotal( name, realm )
+	if today then
+		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
 	end
 end
-
+-- DropDownMenu
+function STEPS.AddToDropDownMenu( frame, _, _, level )
+	local clicked_frame
+	if isElvUIInstalled or isShadowedUnitFrames then
+		clicked_frame = frame.unit
+	else
+		if frame:GetParent() then
+			clicked_frame = frame:GetParent().unit
+		end
+	end
+	if clicked_frame and level == 1 then
+		local name, realm = UnitName( clicked_frame )
+		if not realm then
+			realm = GetRealmName()
+		end
+		today, total = STEPS.GetTodayTotal( name, realm )
+		if today then
+			UIDropDownMenu_AddSeparator()
+			local steps_info = UIDropDownMenu_CreateInfo()
+			steps_info.notCheckable = true
+			steps_info.isTitle = true
+			steps_info.text = "Steps"
+			UIDropDownMenu_AddButton( steps_info, 1 )
+			steps_info.isTitle = false
+			steps_info.text = "today: "..today.." total: "..total
+			UIDropDownMenu_AddButton( steps_info, 1 )
+		end
+	end
+end
+hooksecurefunc( "UIDropDownMenu_Initialize", STEPS.AddToDropDownMenu )
 STEPS.commandList = {
 	[STEPS.L["help"]] = {
 		["func"] = STEPS.PrintHelp,
