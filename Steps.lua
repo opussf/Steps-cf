@@ -1,4 +1,4 @@
--- STEPS 1.11
+-- STEPS 1.12
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -348,18 +348,24 @@ end
 -- DropDownMenu
 function STEPS.AddToDropDownMenu( frame, _, _, level )
 	local clicked_frame
+	local name, realm
 	if isElvUIInstalled or isShadowedUnitFrames then
 		clicked_frame = frame.unit
 	else
-		if frame:GetParent() then
-			clicked_frame = frame:GetParent().unit
-		end
+		clicked_frame = frame
 	end
+	if frame then
+		name = frame.name
+		realm = frame.server
+	end
+
 	if clicked_frame and level == 1 then
-		local name, realm = UnitName( clicked_frame )
-		if not realm then
+		if not realm then  -- frame does not have .server
 			realm = GetRealmName()
 		end
+--		STEPS.Print(" name: "..name )
+--		STEPS.Print("realm: "..realm )
+
 		today, total = STEPS.GetTodayTotal( name, realm )
 		if today then
 			UIDropDownMenu_AddSeparator()
@@ -375,6 +381,34 @@ function STEPS.AddToDropDownMenu( frame, _, _, level )
 	end
 end
 hooksecurefunc( "UIDropDownMenu_Initialize", STEPS.AddToDropDownMenu )
+-- Post
+function STEPS.GetPostString()
+	local dateStr = date("%Y%m%d")
+	return string.format("%s: %i", STEPS.L["My steps today"], math.floor( STEPS.mine[dateStr].steps or "0" ) )
+end
+function STEPS.Post( param )
+	local chatChannel, toWhom
+	if( param ) then
+		if( param == "say" ) then
+			chatChannel = "SAY"
+		elseif( param == "guild" and IsInGuild() ) then
+			chatChannel = "GUILD"
+		elseif( param == "party" and IsInGroup() ) then
+			chatChannel = "PARTY"
+		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_INSTANCE ) ) then
+			chatChannel = "INSTANCE"
+		elseif( param == 'raid' and IsInRaid() ) then
+			chatChannel = "RAID"
+		elseif( param ~= "" ) then
+			chatChannel = "WHISPER"
+			toWhom = param
+		end
+
+		if( chatChannel ) then
+			SendChatMessage( STEPS.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
+		end
+	end
+end
 STEPS.commandList = {
 	[STEPS.L["help"]] = {
 		["func"] = STEPS.PrintHelp,
@@ -400,7 +434,7 @@ STEPS.commandList = {
 	},
 	[STEPS.L["reset"]] = {
 		["func"] = STEPS.UIReset,
-		["help"] = {"", "Reset the position of the UI"}
+		["help"] = {"", STEPS.L["Reset the position of the UI"]}
 	},
 	[STEPS.L["chat"]] = {
 		["func"] = function() Steps_options.enableChat = not Steps_options.enableChat;
@@ -414,7 +448,11 @@ STEPS.commandList = {
 						end
 					end,
 		["help"] = {"", STEPS.L["Toggle chat {steps} integration."]}
-	}
+	},
+	[STEPS.L["post"]] = {
+		["func"] = STEPS.Post,
+		["help"] = { "[say|guild|party|instance|raid|<playerName>]", "Post steps report to channel or player." }
+	},
 	-- [STEPS.L["display"]] = {
 	-- 	["func"] = STEPS.ChangeDisplay,
 	-- 	["help"] = {"",STEPS.L["Cycle through display options."]}

@@ -1,7 +1,8 @@
-Changes since 1.11..
+Changes since 1.12..
 
-* 16e02da 2024-01-08 19:40:41 -0800 -  (HEAD -> master, tag: 1.11, origin/master) Merge pull request #1 from opussf/develop <opussf>
-* 0016ea5 2024-01-08 19:29:12 -0800 -  (origin/develop, develop) Merge branch 'targetDropdown' into develop <opussf>
-* dffd917 2024-01-08 19:28:42 -0800 -  FEATURE <opussf>
-* 2d2a364 2024-01-08 18:06:02 -0800 -  Dropdown menu, title, and data, export json works again. <opussf>
-* 5b3e6a8 2024-01-08 15:43:32 -0800 -  Dropdown, and function <opussf>
+* 6cd46e3 2024-01-12 00:05:40 -0800 -  (HEAD -> master, tag: 1.12, origin/master) Merge branch 'develop' <opussf>
+* b9d3ac5 2024-01-12 00:04:57 -0800 -  (develop) Merge branch 'post' into develop <opussf>
+* 6077fe1 2024-01-11 23:42:24 -0800 -  say channel <opussf>
+* 727451c 2024-01-11 13:22:16 -0800 -  Post <opussf>
+* f5e11ea 2024-01-11 12:51:22 -0800 -  GetPostString function <opussf>
+* ca2f84b 2024-01-11 12:41:15 -0800 -  Start and tests for Post command <opussf>
