@@ -1,8 +1,3 @@
-Changes since 1.12..
+Changes since 1.12.1..
 
-* 6cd46e3 2024-01-12 00:05:40 -0800 -  (HEAD -> master, tag: 1.12, origin/master) Merge branch 'develop' <opussf>
-* b9d3ac5 2024-01-12 00:04:57 -0800 -  (develop) Merge branch 'post' into develop <opussf>
-* 6077fe1 2024-01-11 23:42:24 -0800 -  say channel <opussf>
-* 727451c 2024-01-11 13:22:16 -0800 -  Post <opussf>
-* f5e11ea 2024-01-11 12:51:22 -0800 -  GetPostString function <opussf>
-* ca2f84b 2024-01-11 12:41:15 -0800 -  Start and tests for Post command <opussf>
+* 3372619 2024-01-13 14:17:21 -0800 -  (HEAD -> master, tag: 1.12.1, origin/master) Bug fix <opussf>
