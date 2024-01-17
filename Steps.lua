@@ -1,4 +1,4 @@
--- STEPS 1.12.1
+-- STEPS 1.12.2
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -451,7 +451,7 @@ STEPS.commandList = {
 	},
 	[STEPS.L["post"]] = {
 		["func"] = STEPS.Post,
-		["help"] = { "[say|guild|party|instance|raid|<playerName>]", "Post steps report to channel or player." }
+		["help"] = { "[say|guild|party|instance| raid|<playerName>]", "Post steps report to channel or player." }
 	},
 	-- [STEPS.L["display"]] = {
 	-- 	["func"] = STEPS.ChangeDisplay,
