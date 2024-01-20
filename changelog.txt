@@ -1,3 +1,5 @@
-Changes since 1.12.2..
+Changes since 1.12.3..
 
-* 26afc55 2024-01-17 14:27:22 -0800 -  (HEAD -> master, tag: 1.12.2, origin/master) 100205 <opussf>
+* ea97e3b 2024-01-20 01:03:00 -0800 -  (HEAD -> master, tag: 1.12.3, origin/master) Merge branch 'instance_chat' <opussf>
+* 8dc3c5c 2024-01-20 01:00:34 -0800 -  Correct chat channel <opussf>
+* 0226810 2024-01-20 00:54:03 -0800 -  Bug fix for instance chat <opussf>
