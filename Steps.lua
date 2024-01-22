@@ -1,4 +1,4 @@
--- STEPS 1.12.3
+-- STEPS 1.13
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -212,7 +212,7 @@ function STEPS.CalcMinAveMax()
 	local sum, count = 0, 0
 	local dateStr = date("%Y%m%d")
 	for date, struct in pairs( STEPS.mine ) do
-		if string.len(date) == 8 and date ~= dateStr then
+		if string.len(date) == 8 and date ~= dateStr and struct.steps > 0 then
 			dSteps = struct.steps
 			min = min and math.min(min, dSteps) or dSteps
 			max = max and math.max(max, dSteps) or dSteps
@@ -391,12 +391,16 @@ function STEPS.Post( param )
 	if( param ) then
 		if( param == "say" ) then
 			chatChannel = "SAY"
+		elseif( param == "yell") then
+			chatChannel = "YELL"
 		elseif( param == "guild" and IsInGuild() ) then
 			chatChannel = "GUILD"
-		elseif( param == "party" and IsInGroup() ) then
+		elseif( param == "party" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
 			chatChannel = "PARTY"
 		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_INSTANCE ) ) then
 			chatChannel = "INSTANCE_CHAT"
+		elseif( param == "instance" and IsInGroup( LE_PARTY_CATEGORY_HOME ) ) then
+			chatChannel = "PARTY"
 		elseif( param == 'raid' and IsInRaid() ) then
 			chatChannel = "RAID"
 		elseif( param ~= "" ) then
@@ -406,6 +410,7 @@ function STEPS.Post( param )
 
 		if( chatChannel ) then
 			SendChatMessage( STEPS.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
+			STEPS.SendMessages()
 		end
 	end
 end
@@ -449,9 +454,27 @@ STEPS.commandList = {
 					end,
 		["help"] = {"", STEPS.L["Toggle chat {steps} integration."]}
 	},
-	[STEPS.L["post"]] = {
-		["func"] = STEPS.Post,
-		["help"] = { "[say|guild|party|instance| raid|<playerName>]", "Post steps report to channel or player." }
+	[STEPS.L["say"]] = {
+		["func"] = function() STEPS.Post("say") end,
+		["help"] = { "| guild | party | instance | raid | whisper <playerName>", "Post steps report to channel or player."}
+	},
+	[STEPS.L["yell"]] = {
+		["func"] = function() STEPS.Post("yell") end,
+	},
+	[STEPS.L["guild"]] = {
+		["func"] = function() STEPS.Post("guild") end,
+	},
+	[STEPS.L["party"]] = {
+		["func"] = function() STEPS.Post("party") end,
+	},
+	[STEPS.L["instance"]] = {
+		["func"] = function() STEPS.Post("instance") end,
+	},
+	[STEPS.L["raid"]] = {
+		["func"] = function() STEPS.Post("raid") end,
+	},
+	[STEPS.L["whisper"]] = {
+		["func"] = function(target) STEPS.Post(target) end,
 	},
 	-- [STEPS.L["display"]] = {
 	-- 	["func"] = STEPS.ChangeDisplay,

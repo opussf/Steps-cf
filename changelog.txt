@@ -1,5 +1,4 @@
-Changes since 1.12.3..
+Changes since 1.13..
 
-* ea97e3b 2024-01-20 01:03:00 -0800 -  (HEAD -> master, tag: 1.12.3, origin/master) Merge branch 'instance_chat' <opussf>
-* 8dc3c5c 2024-01-20 01:00:34 -0800 -  Correct chat channel <opussf>
-* 0226810 2024-01-20 00:54:03 -0800 -  Bug fix for instance chat <opussf>
+* 2264844 2024-01-21 22:13:36 -0800 -  (HEAD -> master, tag: 1.13) Merge branch 'postBug' <opussf>
+* 5721c8c 2024-01-21 16:57:01 -0800 -  (postBug) I should testthe whisper <opussf>

@@ -1,4 +1,4 @@
--- StepsChat.lua 1.12.3
+-- StepsChat.lua 1.13
 
 function STEPS.InitChat()
 	STEPS.OriginalSendChatMessage = SendChatMessage
@@ -24,6 +24,7 @@ function STEPS.ReplaceMessage( msgIn )
 end
 function STEPS.SendChatMessage( msgIn, system, language, channel )
 	STEPS.OriginalSendChatMessage( STEPS.ReplaceMessage( msgIn ), system, language, channel )
+	STEPS.SendMessages()
 end
 function STEPS.BNSendWhisper( id, msgIn )
 	STEPS.OriginalBNSendWhisper( id, STEPS.ReplaceMessage( msgIn ) )
