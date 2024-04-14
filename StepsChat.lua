@@ -1,4 +1,4 @@
--- StepsChat.lua 2.0b
+-- StepsChat.lua 2.0
 
 function STEPS.InitChat()
 	STEPS.OriginalSendChatMessage = SendChatMessage

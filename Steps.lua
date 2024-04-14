@@ -1,4 +1,4 @@
--- STEPS 2.0b
+-- STEPS 2.0
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -203,7 +203,6 @@ STEPS.keyFunctions = {
 }
 function STEPS.DecodeMessage( msgIn )
 	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
-		-- print(k.."-"..v)
 		if STEPS.keyFunctions[k] then
 			STEPS.keyFunctions[k](v)
 		end
