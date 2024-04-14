@@ -1,4 +1,4 @@
--- STEPS 2.0
+-- STEPS 2.0-develop
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )

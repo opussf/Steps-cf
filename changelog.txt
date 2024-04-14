@@ -1,7 +1,7 @@
 Changes since 2.0..
 
-* 9c9b7db 2024-04-14 10:45:07 -0700 -  (HEAD -> master, tag: 2.0) Merge branch 'develop' <opussf>
-* b16f248 2024-04-14 10:42:47 -0700 -  (origin/develop, newEncoding, develop) removing debug <opussf>
+* 9c9b7db 2024-04-14 10:45:07 -0700 -  (HEAD -> develop, tag: 2.0, origin/master, origin/develop, master) Merge branch 'develop' <opussf>
+* b16f248 2024-04-14 10:42:47 -0700 -  removing debug <opussf>
 * e5d9901 2024-04-14 00:41:09 -0700 -  Steps print <opussf>
 * b31b286 2024-04-14 00:39:10 -0700 -  Shorter is better, in this case. <opussf>
 * 96de073 2024-04-13 12:42:46 -0700 -  Stopping time <opussf>
