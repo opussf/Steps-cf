@@ -1,4 +1,4 @@
--- STEPS 2.0.1
+-- STEPS 2.0.2
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -202,6 +202,7 @@ STEPS.keyFunctions = {
 	end,
 }
 function STEPS.DecodeMessage( msgIn )
+	if STEPS.debug then print( "Decode( "..msgIn.." )" ) end
 	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
 		if STEPS.keyFunctions[k] then
 			STEPS.keyFunctions[k](v)
@@ -211,6 +212,7 @@ function STEPS.DecodeMessage( msgIn )
 end
 STEPS.keyMap = { "v", "r", "n", "s2" }
 function STEPS.DecodeMessage2( msgIn )
+	if STEPS.debug then print( "Decode2( "..msgIn.." )" ) end
 	local decodeTable = {}
 	k = 1
 	for v in string.gmatch( msgIn, "([^|]+)" ) do
@@ -549,6 +551,9 @@ STEPS.commandList = {
 	},
 	[STEPS.L["whisper"]] = {
 		["func"] = function(target) STEPS.Post(target) end,
+	},
+	["debug"] = {
+		["func"] = function() STEPS.debug = not STEPS.debug end
 	},
 	-- [STEPS.L["display"]] = {
 	-- 	["func"] = STEPS.ChangeDisplay,
