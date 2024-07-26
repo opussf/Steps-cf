@@ -1,4 +1,4 @@
--- STEPS 2.0.2
+-- STEPS 2.0.3
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -490,21 +490,23 @@ function STEPS.Post( param )
 		end
 	end
 end
+function STEPS.UpdateBars()
+	if Steps_options.show then
+		Steps_Frame:SetAlpha(1)
+	else
+		Steps_StepBar_1:Hide()
+		Steps_StepBar_2:Hide()
+		Steps_Frame:SetAlpha(0)
+	end
+end
+
 STEPS.commandList = {
 	[STEPS.L["help"]] = {
 		["func"] = STEPS.PrintHelp,
 		["help"] = {"",STEPS.L["Print this help."]}
 	},
 	[STEPS.L["show"]] = {
-		["func"] = function() Steps_options.show = not Steps_options.show;
-						if Steps_options.show then
-							Steps_Frame:SetAlpha(1)
-						else
-							Steps_StepBar_1:Hide()
-							Steps_StepBar_2:Hide()
-							Steps_Frame:SetAlpha(0)
-						end
-					end,
+		["func"] = function() Steps_options.show = not Steps_options.show; STEPS.UpdateBars(); end,
 		["help"] = {"", STEPS.L["Toggle display."]}
 	},
 	[STEPS.L["lock"]] = {
