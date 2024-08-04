@@ -1,19 +1,5 @@
-Changes since 2.0.3..
+Changes since 2.0.3-beta..
 
-* fbc4068 2024-07-26 16:38:32 -0700 -  (HEAD -> master, tag: 2.0.3, origin/master) Merge branch 'develop' <opussf>
-* b78b87a 2024-07-26 16:35:40 -0700 -  (develop) Merge branch 'options' into develop <opussf>
-* 41b58d9 2024-07-26 16:32:08 -0700 -  (options) 110000 options changes <opussf>
-* ffddf2f 2024-06-03 11:28:26 -0700 -  Merge branch 'develop' into options <opussf>
-* 5d8de5a 2024-04-15 11:46:02 -0700 -  Merge branch 'master' into options <opussf>
-* a7f4b5c 2024-01-23 16:22:45 -0800 -  Options start <opussf>
-* b7a1755 2024-01-22 20:21:46 -0800 -  Options command and initial panel <opussf>
-* 9324646 2024-01-21 22:18:14 -0800 -  Merge branch 'develop' into options <opussf>
-* a3b6cb5 2024-01-21 11:00:54 -0800 -  Base files <opussf>
-* c4a5098 2024-01-21 10:19:25 -0800 -  Merge branch 'develop' into options <opussf>
-* 48ea267 2024-01-20 14:36:39 -0800 -  Moving <opussf>
-* a797dff 2024-01-20 14:34:51 -0800 -  Optionsmono <opussf>
-* cd65e64 2024-01-20 14:34:15 -0800 -  Data display <opussf>
-* 82c9780 2024-01-20 14:08:12 -0800 -  Options <opussf>
-* 7d62e99 2024-01-20 13:54:45 -0800 -  Options layout text <opussf>
-* f1665a5 2024-01-20 01:39:22 -0800 -  Options layout start <opussf>
-* 63f7959 2024-01-20 01:32:28 -0800 -  Options Start <opussf>
+* 769ec2f 2024-08-03 17:54:50 -0700 -  (HEAD -> master, tag: 2.0.3-beta) Merge branch 'develop' <opussf>
+* c891ac4 2024-08-03 17:24:29 -0700 -  (develop) Merge branch '110000' into develop <opussf>
+* 8e07a43 2024-08-03 17:01:04 -0700 -  (110000) DeNormalize some realm names... <opussf>

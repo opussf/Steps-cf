@@ -1,4 +1,4 @@
--- STEPS 2.0.3
+-- STEPS 2.0.3-beta
 STEPS_SLUG, STEPS = ...
 STEPS_MSG_ADDONNAME = GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -395,6 +395,20 @@ function STEPS.UIReset()
 	Steps_Frame:ClearAllPoints()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
 end
+function STEPS.DeNormalizeRealm( realm )
+	local realmOut = ""
+	for s in string.gmatch( realm, "(.)" ) do
+		if string.find( s, "[A-Z]" ) then
+			s = " "..s
+		end
+		realmOut = realmOut..s
+	end
+	b = string.find( realmOut, "of " )
+	if b then
+		realmOut = string.sub( realmOut, 1, b-1 ).." "..string.sub( realmOut, b, -1 )
+	end
+	return string.sub( realmOut, 2, -1 )
+end
 function STEPS.GetTodayTotal( name, realm )
 	if name and Steps_data[realm] and Steps_data[realm][name] then
 		for dayBack = -1,1 do
@@ -422,41 +436,17 @@ function STEPS.TooltipSetUnit( arg1, arg2 )
 	end
 end
 -- DropDownMenu
-function STEPS.AddToDropDownMenu( frame, _, _, level )
-	local clicked_frame
-	local name, realm
-	if isElvUIInstalled or isShadowedUnitFrames then
-		clicked_frame = frame.unit
-	else
-		clicked_frame = frame
-	end
-	if frame then
-		name = frame.name
-		realm = frame.server
-	end
-
-	if clicked_frame and level == 1 then
-		if not realm then  -- frame does not have .server
-			realm = GetRealmName()
-		end
---		STEPS.Print(" name: "..name )
---		STEPS.Print("realm: "..realm )
-
-		today, total = STEPS.GetTodayTotal( name, realm )
-		if today then
-			UIDropDownMenu_AddSeparator()
-			local steps_info = UIDropDownMenu_CreateInfo()
-			steps_info.notCheckable = true
-			steps_info.isTitle = true
-			steps_info.text = "Steps"
-			UIDropDownMenu_AddButton( steps_info, 1 )
-			steps_info.isTitle = false
-			steps_info.text = "today: "..today.." total: "..total
-			UIDropDownMenu_AddButton( steps_info, 1 )
-		end
+function STEPS.ModifyMenu( owner, rootDescription, contextData )
+	today, total = STEPS.GetTodayTotal( contextData.name, (contextData.server and STEPS.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
+	if today then
+		rootDescription:CreateDivider()
+		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
 	end
 end
-hooksecurefunc( "UIDropDownMenu_Initialize", STEPS.AddToDropDownMenu )
+Menu.ModifyMenu("MENU_UNIT_SELF", STEPS.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_COMMUNITIES_GUILD_MEMBER", STEPS.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_PARTY", STEPS.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_RAID", STEPS.ModifyMenu)
 -- Post
 function STEPS.GetPostString()
 	local dateStr = date("%Y%m%d")
