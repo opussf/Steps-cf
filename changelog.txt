@@ -1,5 +1,5 @@
-Changes since 2.0.3-beta..
+Changes since 2.0.4..
 
-* 769ec2f 2024-08-03 17:54:50 -0700 -  (HEAD -> master, tag: 2.0.3-beta) Merge branch 'develop' <opussf>
-* c891ac4 2024-08-03 17:24:29 -0700 -  (develop) Merge branch '110000' into develop <opussf>
-* 8e07a43 2024-08-03 17:01:04 -0700 -  (110000) DeNormalize some realm names... <opussf>
+* 769ec2f 2024-08-03 17:54:50 -0700 -  (HEAD -> master, tag: 2.0.4-beta, tag: 2.0.4, origin/develop, develop, 110000) Merge branch 'develop' <opussf>
+* c891ac4 2024-08-03 17:24:29 -0700 -  Merge branch '110000' into develop <opussf>
+* 8e07a43 2024-08-03 17:01:04 -0700 -  DeNormalize some realm names... <opussf>
