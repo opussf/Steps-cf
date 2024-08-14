@@ -1,4 +1,4 @@
--- STEPSOptions 2.0.4
+-- STEPSOptions 2.0.5
 function STEPS.OptionsPanel_OnLoad( panel )
 	panel.name = "Steps"
 	STEPSOptionsFrame_Title:SetText(STEPS_MSG_ADDONNAME.." v"..STEPS_MSG_VERSION)

@@ -1,8 +1,8 @@
 ## Title: Steps
-## Interface: 110000
-## Notes: Steps (2.0.4)
+## Interface: 110002
+## Notes: Steps (2.0.5)
 ## Author: opussf
-## Version: 2.0.4
+## Version: 2.0.5
 ## Description: Track how many steps you have taken
 ## Description-frFR: Displays a message greeting France
 ## Description-deDE: Displays a message greeting Germany
