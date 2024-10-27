@@ -1,31 +1,31 @@
 -- StepsChat.lua 2.0.5
 
-function STEPS.InitChat()
-	STEPS.OriginalSendChatMessage = SendChatMessage
-	SendChatMessage = STEPS.SendChatMessage
-	STEPS.OriginalBNSendWhisper = BNSendWhisper
-	BNSendWhisper = STEPS.BNSendWhisper
-	STEPS.commandList[""] = {
-		["help"] = {STEPS.L["{steps}"], STEPS.L["Send steps to any chat"]},
+function Steps.InitChat()
+	Steps.OriginalSendChatMessage = SendChatMessage
+	SendChatMessage = Steps.SendChatMessage
+	Steps.OriginalBNSendWhisper = BNSendWhisper
+	BNSendWhisper = Steps.BNSendWhisper
+	Steps.commandList[""] = {
+		["help"] = {Steps.L["{steps}"], Steps.L["Send steps to any chat"]},
 	}
 end
-function STEPS.ReplaceMessage( msgIn )
+function Steps.ReplaceMessage( msgIn )
 	-- search for and replace {FB}
 	--print( "msgIn: "..msgIn )
-	STEPS.SendMessages()
+	Steps.SendMessages()
 	msgNew = nil
 	local tokenStart, tokenEnd  = strfind( msgIn, "{[sS][tT][eE][pP][sS]*}" )
 	if tokenStart then
 		msgNew = string.sub( msgIn, 1, tokenStart-1 )..
-				STEPS.GetPostString()..
+				Steps.GetPostString()..
 				string.sub( msgIn, tokenEnd+1 )
 	end
 	return( ( msgNew or msgIn ) )
 end
-function STEPS.SendChatMessage( msgIn, system, language, channel )
-	STEPS.OriginalSendChatMessage( STEPS.ReplaceMessage( msgIn ), system, language, channel )
-	STEPS.SendMessages()
+function Steps.SendChatMessage( msgIn, system, language, channel )
+	Steps.OriginalSendChatMessage( Steps.ReplaceMessage( msgIn ), system, language, channel )
+	Steps.SendMessages()
 end
-function STEPS.BNSendWhisper( id, msgIn )
-	STEPS.OriginalBNSendWhisper( id, STEPS.ReplaceMessage( msgIn ) )
+function Steps.BNSendWhisper( id, msgIn )
+	Steps.OriginalBNSendWhisper( id, Steps.ReplaceMessage( msgIn ) )
 end

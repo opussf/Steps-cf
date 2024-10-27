@@ -1,9 +1,9 @@
-<!-- STEPSOptions 2.0.5 -->
+<!-- StepsOptions 2.0.5 -->
 <Ui xmlns="http://www.blizzard.com/wow/ui/"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\FrameXML\UI.xsd">
-	<CheckButton name="STEPSOptionsCheckButtonTemplate" inherits="InterfaceOptionsCheckButtonTemplate" virtual="true">
+	<CheckButton name="StepsOptionsCheckButtonTemplate" inherits="InterfaceOptionsCheckButtonTemplate" virtual="true">
 		<Scripts>
 			<OnEnter>
 				GameTooltip:SetOwner(self, "ANCHOR_LEFT");
@@ -13,7 +13,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 		</Scripts>
 	</CheckButton>
 
-	<Frame name="STEPSOptionsFrame">
+	<Frame name="StepsOptionsFrame">
 		<Layers>
 			<Layer level="ARTWORK">
 				<FontString name="$parent_Title" inherits="GameFontNormalLarge">
@@ -33,18 +33,18 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 			</Layer>
 		</Layers>
 		<Frames>
-			<CheckButton name="$parent_Show" inherits="STEPSOptionsCheckButtonTemplate">
+			<CheckButton name="$parent_Show" inherits="StepsOptionsCheckButtonTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent_BarsHeader" relativePoint="BOTTOMLEFT">
 					</Anchor>
 				</Anchors>
 				<Scripts>
 					<OnLoad>self.tooltip = "Show progress bars."</OnLoad>
-					<OnShow>STEPS.OptionsPanel_CheckButton_OnLoad(self,"show","Show")</OnShow>
-					<OnClick>STEPS.OptionsPanel_CheckButton_OnClick(self,"show"); STEPS.UpdateBars()</OnClick>
+					<OnShow>Steps.OptionsPanel_CheckButton_OnLoad(self,"show","Show")</OnShow>
+					<OnClick>Steps.OptionsPanel_CheckButton_OnClick(self,"show"); Steps.UpdateBars()</OnClick>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="$parent_Unlocked" inherits="STEPSOptionsCheckButtonTemplate">
+			<CheckButton name="$parent_Unlocked" inherits="StepsOptionsCheckButtonTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent_BarsHeader" relativePoint="BOTTOMLEFT">
 						<Offset><AbsDimension x="200" y="0"/></Offset>
@@ -52,14 +52,14 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 				</Anchors>
 				<Scripts>
 					<OnLoad>self.tooltip = "Unlock the bar to allow movement.";</OnLoad>
-					<OnShow>STEPS.OptionsPanel_CheckButton_OnLoad(self,"unlocked","Unlocked")</OnShow>
-					<OnClick>STEPS.OptionsPanel_CheckButton_OnClick(self,"unlocked")</OnClick>
+					<OnShow>Steps.OptionsPanel_CheckButton_OnLoad(self,"unlocked","Unlocked")</OnShow>
+					<OnClick>Steps.OptionsPanel_CheckButton_OnClick(self,"unlocked")</OnClick>
 				</Scripts>
 			</CheckButton>
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				STEPS.OptionsPanel_OnLoad(self)
+				Steps.OptionsPanel_OnLoad(self)
 			</OnLoad>
 		</Scripts>
 	</Frame>

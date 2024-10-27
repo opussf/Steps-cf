@@ -1,5 +1,5 @@
 Changes since 2.0.5..
 
-* 69ffc6c 2024-08-13 17:40:29 -0700 -  (HEAD -> master, tag: 2.0.5) Merge branch 'develop' <opussf>
-* c5d27e6 2024-08-13 17:39:35 -0700 -  (develop) Merge branch '110000' into develop <opussf>
-* bc8cb1e 2024-08-13 17:39:03 -0700 -  (110000) 110002 Updates <opussf>
+* 0cd6e78 2024-10-27 16:41:03 -0700 -  (HEAD -> master, tag: 2.0.5) Merge branch '110005' <opussf>
+* 8aed46d 2024-10-22 22:51:42 -0700 -  (110005) Change Structure name from STEPS to Steps <opussf>
+* 9f4bca8 2024-10-22 16:02:02 -0700 -  110005 updates <opussf>

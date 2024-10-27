@@ -1,8 +1,8 @@
--- STEPS 2.0.5
-STEPS_SLUG, STEPS   = ...
-STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
-STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
-STEPS_MSG_AUTHOR    = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Author" )
+-- Steps 2.0.5
+Steps_SLUG, Steps   = ...
+Steps_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Title" )
+Steps_MSG_VERSION   = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Version" )
+Steps_MSG_AUTHOR    = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Author" )
 
 -- Colours
 COLOR_RED = "|cffff0000"
@@ -18,19 +18,19 @@ COLOR_END = "|r"
 
 Steps_data = {}
 Steps_options = {}
-STEPS.steps_per_second = 2/7  -- 2 steps at speed 7
-STEPS.pruneDays = 91
-STEPS.min = 0
-STEPS.ave = 0
-STEPS.max = 0
-STEPS.commPrefix = "STEPS"
-STEPS.stepsColor = { 0.73, 0.52, 0.18, 1 }
+Steps.steps_per_second = 2/7  -- 2 steps at speed 7
+Steps.pruneDays = 91
+Steps.min = 0
+Steps.ave = 0
+Steps.max = 0
+Steps.commPrefix = "STEPS"
+Steps.stepsColor = { 0.73, 0.52, 0.18, 1 }
 
 -- Setup
-function STEPS.OnLoad()
-	SLASH_STEPS1 = "/STEPS"
-	SlashCmdList["STEPS"] = function(msg) STEPS.Command(msg); end
-	STEPS.lastSpeed = 0
+function Steps.OnLoad()
+	SLASH_Steps1 = "/Steps"
+	SlashCmdList["Steps"] = function(msg) Steps.Command(msg); end
+	Steps.lastSpeed = 0
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
 	Steps_Frame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
@@ -38,65 +38,65 @@ function STEPS.OnLoad()
 	Steps_Frame:RegisterEvent( "GROUP_ROSTER_UPDATE" )
 	Steps_Frame:RegisterEvent( "INSTANCE_GROUP_SIZE_CHANGED" )
 end
-function STEPS.ADDON_LOADED()
+function Steps.ADDON_LOADED()
 	Steps_Frame:UnregisterEvent( "ADDON_LOADED" )
-	STEPS.name = UnitName("player")
-	STEPS.realm = GetRealmName()
-	STEPS.msgRealm = string.gsub( STEPS.realm, " ", "" )
-	TooltipDataProcessor.AddTooltipPostCall( Enum.TooltipDataType.Unit, STEPS.TooltipSetUnit )
+	Steps.name = UnitName("player")
+	Steps.realm = GetRealmName()
+	Steps.msgRealm = string.gsub( Steps.realm, " ", "" )
+	TooltipDataProcessor.AddTooltipPostCall( Enum.TooltipDataType.Unit, Steps.TooltipSetUnit )
 end
-function STEPS.VARIABLES_LOADED()
+function Steps.VARIABLES_LOADED()
 	-- Unregister the event for this method.
 	Steps_Frame:UnregisterEvent( "VARIABLES_LOADED" )
 
-	Steps_data[STEPS.realm] = Steps_data[STEPS.realm] or {}
-	Steps_data[STEPS.realm][STEPS.name] = Steps_data[STEPS.realm][STEPS.name] or { ["steps"] = 0 }
-	STEPS.mine = Steps_data[STEPS.realm][STEPS.name]
-	STEPS.mine[date("%Y%m%d")] = STEPS.mine[date("%Y%m%d")] or { ["steps"] = 0 }
-	STEPS.min, STEPS.ave, STEPS.max = STEPS.CalcMinAveMax()
-	STEPS.totalC = math.floor( STEPS.mine.steps / 100 )
-	STEPS.Prune()
+	Steps_data[Steps.realm] = Steps_data[Steps.realm] or {}
+	Steps_data[Steps.realm][Steps.name] = Steps_data[Steps.realm][Steps.name] or { ["steps"] = 0 }
+	Steps.mine = Steps_data[Steps.realm][Steps.name]
+	Steps.mine[date("%Y%m%d")] = Steps.mine[date("%Y%m%d")] or { ["steps"] = 0 }
+	Steps.min, Steps.ave, Steps.max = Steps.CalcMinAveMax()
+	Steps.totalC = math.floor( Steps.mine.steps / 100 )
+	Steps.Prune()
 	if Steps_options.show then
 		Steps_Frame:SetAlpha(1)
 	else
 		Steps_Frame:SetAlpha(0)
 	end
 	if Steps_options.enableChat then
-		STEPS.InitChat()
+		Steps.InitChat()
 	end
 end
-function STEPS.SendMessages()
-	if not C_ChatInfo.IsAddonMessagePrefixRegistered(STEPS.commPrefix) then
-		C_ChatInfo.RegisterAddonMessagePrefix(STEPS.commPrefix)
+function Steps.SendMessages()
+	if not C_ChatInfo.IsAddonMessagePrefixRegistered(Steps.commPrefix) then
+		C_ChatInfo.RegisterAddonMessagePrefix(Steps.commPrefix)
 	end
 
-	STEPS.addonMsg = STEPS.BuildAddonMessage2()
+	Steps.addonMsg = Steps.BuildAddonMessage2()
 	if IsInGuild() then
-		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "GUILD" )
+		C_ChatInfo.SendAddonMessage( Steps.commPrefix, Steps.addonMsg, "GUILD" )
 	end
 	if IsInGroup(LE_PARTY_CATEGORY_HOME) then
-		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "PARTY" )
+		C_ChatInfo.SendAddonMessage( Steps.commPrefix, Steps.addonMsg, "PARTY" )
 	end
 	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-		C_ChatInfo.SendAddonMessage( STEPS.commPrefix, STEPS.addonMsg, "INSTANCE_CHAT" )
+		C_ChatInfo.SendAddonMessage( Steps.commPrefix, Steps.addonMsg, "INSTANCE_CHAT" )
 	end
-	STEPS.totalC = math.floor( STEPS.mine.steps / 100 )
+	Steps.totalC = math.floor( Steps.mine.steps / 100 )
 end
-STEPS.LOADING_SCREEN_DISABLED = STEPS.SendMessages
-STEPS.GROUP_ROSTER_UPDATE = STEPS.SendMessages
-STEPS.INSTANCE_GROUP_SIZE_CHANGED = STEPS.SendMessages
-function STEPS.CHAT_MSG_ADDON(...)
+Steps.LOADING_SCREEN_DISABLED = Steps.SendMessages
+Steps.GROUP_ROSTER_UPDATE = Steps.SendMessages
+Steps.INSTANCE_GROUP_SIZE_CHANGED = Steps.SendMessages
+function Steps.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
-	-- STEPS.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
-	if prefix == STEPS.commPrefix and sender ~= STEPS.name.."-"..STEPS.msgRealm then
+	-- Steps.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+	if prefix == Steps.commPrefix and sender ~= Steps.name.."-"..Steps.msgRealm then
 		if string.find(message, "v:") then
-			STEPS.DecodeMessage( message )
+			Steps.DecodeMessage( message )
 		else
-			STEPS.DecodeMessage2( message )
+			Steps.DecodeMessage2( message )
 		end
 	end
 end
-function STEPS.toBytes(num)
+function Steps.toBytes(num)
 	-- print( "toBytes( "..num.." )" )
 	-- returns a table and string of bytes.  MSB first
 	local t = {} -- will contain the bits
@@ -114,7 +114,7 @@ function STEPS.toBytes(num)
 	end
 	return t, strOut
 end
-function STEPS.fromBytes( bytes )
+function Steps.fromBytes( bytes )
 	local num = 0
 
 	for i = 1,#bytes do
@@ -124,17 +124,17 @@ function STEPS.fromBytes( bytes )
 
 	return num
 end
-function STEPS.BuildAddonMessage2()
-	local prefixLen = string.len( STEPS.commPrefix ) + 1
+function Steps.BuildAddonMessage2()
+	local prefixLen = string.len( Steps.commPrefix ) + 1
 	local msgStr = string.format("%s|%s|%s|%s",
-			STEPS_MSG_VERSION, STEPS.realm, STEPS.name, select(2, STEPS.toBytes( math.ceil( STEPS.mine.steps ) ) )
+			Steps_MSG_VERSION, Steps.realm, Steps.name, select(2, Steps.toBytes( math.ceil( Steps.mine.steps ) ) )
 	)
-	for dayBack=0,STEPS.pruneDays do
+	for dayBack=0,Steps.pruneDays do
 		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
-		if STEPS.mine[dayStr] and STEPS.mine[dayStr].steps > 0 then
+		if Steps.mine[dayStr] and Steps.mine[dayStr].steps > 0 then
 			local daySteps = string.format("%s%s",
-					select(2, STEPS.toBytes( tonumber( dayStr ) ) ),
-					select(2, STEPS.toBytes( math.ceil( STEPS.mine[dayStr].steps ) ) )
+					select(2, Steps.toBytes( tonumber( dayStr ) ) ),
+					select(2, Steps.toBytes( math.ceil( Steps.mine[dayStr].steps ) ) )
 			)
 			if ( prefixLen + string.len( msgStr ) + string.len( daySteps ) + 1 >= 255 ) then
 				break
@@ -144,150 +144,150 @@ function STEPS.BuildAddonMessage2()
 	end
 	return msgStr
 end
-function STEPS.BuildAddonMessage()
-	STEPS.addonMsgTable = {}
-	table.insert( STEPS.addonMsgTable, "v:"..STEPS_MSG_VERSION )
-	table.insert( STEPS.addonMsgTable, "r:"..STEPS.realm )
-	table.insert( STEPS.addonMsgTable, "n:"..STEPS.name )
-	table.insert( STEPS.addonMsgTable, "s:"..math.ceil( STEPS.mine.steps ) )
+function Steps.BuildAddonMessage()
+	Steps.addonMsgTable = {}
+	table.insert( Steps.addonMsgTable, "v:"..Steps_MSG_VERSION )
+	table.insert( Steps.addonMsgTable, "r:"..Steps.realm )
+	table.insert( Steps.addonMsgTable, "n:"..Steps.name )
+	table.insert( Steps.addonMsgTable, "s:"..math.ceil( Steps.mine.steps ) )
 	for dayBack=0,10 do
 		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
-		if STEPS.mine[dayStr] then
-			table.insert( STEPS.addonMsgTable, "t:"..dayStr.."<"..math.ceil(STEPS.mine[dayStr].steps) )
+		if Steps.mine[dayStr] then
+			table.insert( Steps.addonMsgTable, "t:"..dayStr.."<"..math.ceil(Steps.mine[dayStr].steps) )
 		end
 	end
-	return table.concat( STEPS.addonMsgTable, "," )
+	return table.concat( Steps.addonMsgTable, "," )
 end
-function STEPS.VersionStrToVal( verStr )
+function Steps.VersionStrToVal( verStr )
 	local loc, _, major, minor, patch = string.find( verStr, "^(%d+)%.(%d+)%.*(%d*)" )
 	return (loc and math.floor((major*10000)+(minor*100)+(patch and tonumber(patch) or 0)) or 0)
 end
-STEPS.keyFunctions = {
+Steps.keyFunctions = {
 	v = function(val)
-		STEPS.importVersion = val
-		if not STEPS.versionAlerted and STEPS.VersionStrToVal(val) > STEPS.VersionStrToVal( STEPS_MSG_VERSION ) then
-			STEPS.versionAlerted = true
-			STEPS.Print(STEPS.L["A new version of Steps is available."])
+		Steps.importVersion = val
+		if not Steps.versionAlerted and Steps.VersionStrToVal(val) > Steps.VersionStrToVal( Steps_MSG_VERSION ) then
+			Steps.versionAlerted = true
+			Steps.Print(Steps.L["A new version of Steps is available."])
 		end
 	end,
 	r = function(val)
-		STEPS.importRealm = val
+		Steps.importRealm = val
 	end,
 	n = function(val)
-		STEPS.importName = val
+		Steps.importName = val
 	end,
 	s = function(val)
-		if STEPS.importRealm and STEPS.importName then
-			Steps_data[STEPS.importRealm] = Steps_data[STEPS.importRealm] or {}
-			Steps_data[STEPS.importRealm][STEPS.importName] = Steps_data[STEPS.importRealm][STEPS.importName] or {}
-			Steps_data[STEPS.importRealm][STEPS.importName].steps = tonumber(val)
-			Steps_data[STEPS.importRealm][STEPS.importName].version = STEPS.importVersion
+		if Steps.importRealm and Steps.importName then
+			Steps_data[Steps.importRealm] = Steps_data[Steps.importRealm] or {}
+			Steps_data[Steps.importRealm][Steps.importName] = Steps_data[Steps.importRealm][Steps.importName] or {}
+			Steps_data[Steps.importRealm][Steps.importName].steps = tonumber(val)
+			Steps_data[Steps.importRealm][Steps.importName].version = Steps.importVersion
 		end
 	end,
 	t = function(val)
 		local loc, _, date, steps = string.find(val, "(.+)<(.+)")
-		if loc and STEPS.importRealm and STEPS.importName then
-			Steps_data[STEPS.importRealm] = Steps_data[STEPS.importRealm] or {}
-			Steps_data[STEPS.importRealm][STEPS.importName] = Steps_data[STEPS.importRealm][STEPS.importName] or {}
-			Steps_data[STEPS.importRealm][STEPS.importName][date] = { ["steps"] = tonumber(steps) }
+		if loc and Steps.importRealm and Steps.importName then
+			Steps_data[Steps.importRealm] = Steps_data[Steps.importRealm] or {}
+			Steps_data[Steps.importRealm][Steps.importName] = Steps_data[Steps.importRealm][Steps.importName] or {}
+			Steps_data[Steps.importRealm][Steps.importName][date] = { ["steps"] = tonumber(steps) }
 		end
 	end,
 	s2 = function(val)
-		STEPS.keyFunctions.s( STEPS.fromBytes( val ) )
+		Steps.keyFunctions.s( Steps.fromBytes( val ) )
 	end,
 	t2 = function(val)
-		STEPS.keyFunctions.t( string.format( "%d<%d",
-				STEPS.fromBytes( string.sub( val, 1, 4 ) ), STEPS.fromBytes( string.sub( val, 5, -1 ) )
+		Steps.keyFunctions.t( string.format( "%d<%d",
+				Steps.fromBytes( string.sub( val, 1, 4 ) ), Steps.fromBytes( string.sub( val, 5, -1 ) )
 		) )
 	end,
 }
-function STEPS.DecodeMessage( msgIn )
-	if STEPS.debug then print( "Decode( "..msgIn.." )" ) end
+function Steps.DecodeMessage( msgIn )
+	if Steps.debug then print( "Decode( "..msgIn.." )" ) end
 	for k,v in string.gmatch( msgIn, "(.):([^,]+)" ) do
-		if STEPS.keyFunctions[k] then
-			STEPS.keyFunctions[k](v)
+		if Steps.keyFunctions[k] then
+			Steps.keyFunctions[k](v)
 		end
 	end
-	STEPS.importRealm, STEPS.importName = nil, nil
+	Steps.importRealm, Steps.importName = nil, nil
 end
-STEPS.keyMap = { "v", "r", "n", "s2" }
-function STEPS.DecodeMessage2( msgIn )
-	if STEPS.debug then print( "Decode2( "..msgIn.." )" ) end
+Steps.keyMap = { "v", "r", "n", "s2" }
+function Steps.DecodeMessage2( msgIn )
+	if Steps.debug then print( "Decode2( "..msgIn.." )" ) end
 	local decodeTable = {}
 	k = 1
 	for v in string.gmatch( msgIn, "([^|]+)" ) do
-		if k <= #STEPS.keyMap then
-			STEPS.keyFunctions[STEPS.keyMap[k]](v)
+		if k <= #Steps.keyMap then
+			Steps.keyFunctions[Steps.keyMap[k]](v)
 		else
-			STEPS.keyFunctions.t2(v)
+			Steps.keyFunctions.t2(v)
 		end
 		k = k + 1
 	end
-	STEPS.importRealm, STEPS.importName = nil, nil
+	Steps.importRealm, Steps.importName = nil, nil
 end
 
 -- OnUpdate
-function STEPS.OnUpdate()
+function Steps.OnUpdate()
 	local nowTS = time()
 	local dateStr = date("%Y%m%d")
-	if not STEPS.mine[dateStr] then STEPS.mine[dateStr] = { ["steps"] = 0 } end
+	if not Steps.mine[dateStr] then Steps.mine[dateStr] = { ["steps"] = 0 } end
 	if IsMounted() or IsFlying() then
-		STEPS.isMoving = false
-		STEPS.lastSpeed = 0
+		Steps.isMoving = false
+		Steps.lastSpeed = 0
 	else
 		speed = GetUnitSpeed("player")
-		if speed>0 and not STEPS.isMoving then
-			STEPS.isMoving = true
-			STEPS.lastSpeed = speed
+		if speed>0 and not Steps.isMoving then
+			Steps.isMoving = true
+			Steps.lastSpeed = speed
 		end
-		if speed == 0 and STEPS.isMoving then
-			STEPS.isMoving = false
-			STEPS.lastSpeed = speed
+		if speed == 0 and Steps.isMoving then
+			Steps.isMoving = false
+			Steps.lastSpeed = speed
 		end
-		if speed ~= STEPS.lastSpeed then
-			STEPS.lastSpeed = speed
+		if speed ~= Steps.lastSpeed then
+			Steps.lastSpeed = speed
 		end
-		if nowTS ~= STEPS.lastUpdate then
-			local newSteps = (STEPS.steps_per_second * speed)
-			STEPS.mine.steps = STEPS.mine.steps + newSteps
-			if not STEPS.mine[dateStr] then
-				STEPS.min, STEPS.ave, STEPS.max = STEPS.CalcMinAveMax()
+		if nowTS ~= Steps.lastUpdate then
+			local newSteps = (Steps.steps_per_second * speed)
+			Steps.mine.steps = Steps.mine.steps + newSteps
+			if not Steps.mine[dateStr] then
+				Steps.min, Steps.ave, Steps.max = Steps.CalcMinAveMax()
 			end
-			STEPS.mine[dateStr] = STEPS.mine[dateStr] or { ["steps"] = 0 }
-			STEPS.mine[dateStr].steps = STEPS.mine[dateStr].steps + newSteps
+			Steps.mine[dateStr] = Steps.mine[dateStr] or { ["steps"] = 0 }
+			Steps.mine[dateStr].steps = Steps.mine[dateStr].steps + newSteps
 		end
 	end
-	if Steps_options.show and nowTS ~= STEPS.lastUpdate then
-		STEPS.max = math.floor( math.max( STEPS.max, STEPS.mine[dateStr].steps ) )
-		Steps_StepBar_1:SetMinMaxValues( 0, STEPS.max )
-		Steps_StepBar_2:SetMinMaxValues( 0, STEPS.max )
-		if STEPS.mine[dateStr].steps > STEPS.ave then
-			Steps_StepBar_1:SetValue( STEPS.ave )
+	if Steps_options.show and nowTS ~= Steps.lastUpdate then
+		Steps.max = math.floor( math.max( Steps.max, Steps.mine[dateStr].steps ) )
+		Steps_StepBar_1:SetMinMaxValues( 0, Steps.max )
+		Steps_StepBar_2:SetMinMaxValues( 0, Steps.max )
+		if Steps.mine[dateStr].steps > Steps.ave then
+			Steps_StepBar_1:SetValue( Steps.ave )
 			Steps_StepBar_1:SetStatusBarColor( 0, 0, 1, 1 )
-			Steps_StepBar_2:SetValue( STEPS.mine[dateStr].steps )
-			Steps_StepBar_2:SetStatusBarColor( unpack( STEPS.stepsColor ) )
+			Steps_StepBar_2:SetValue( Steps.mine[dateStr].steps )
+			Steps_StepBar_2:SetStatusBarColor( unpack( Steps.stepsColor ) )
 		else
-			Steps_StepBar_2:SetValue( STEPS.ave )
+			Steps_StepBar_2:SetValue( Steps.ave )
 			Steps_StepBar_2:SetStatusBarColor( 0, 0, 1, 1 )
-			Steps_StepBar_1:SetValue( STEPS.mine[dateStr].steps )
-			Steps_StepBar_1:SetStatusBarColor( unpack( STEPS.stepsColor ) )
+			Steps_StepBar_1:SetValue( Steps.mine[dateStr].steps )
+			Steps_StepBar_1:SetStatusBarColor( unpack( Steps.stepsColor ) )
 		end
 		Steps_StepBar_1:Show()
 		Steps_StepBar_2:Show()
 
-		Steps_StepBarText:SetText( STEPS.L["Steps"]..": "..math.floor( STEPS.mine[dateStr].steps ).." ("..STEPS.ave..":"..STEPS.max..")" )
+		Steps_StepBarText:SetText( Steps.L["Steps"]..": "..math.floor( Steps.mine[dateStr].steps ).." ("..Steps.ave..":"..Steps.max..")" )
 	end
-	STEPS.lastUpdate = nowTS
-	if math.floor( STEPS.mine.steps / 100 ) > STEPS.totalC then
-		STEPS.LOADING_SCREEN_DISABLED()
+	Steps.lastUpdate = nowTS
+	if math.floor( Steps.mine.steps / 100 ) > Steps.totalC then
+		Steps.LOADING_SCREEN_DISABLED()
 	end
 end
-function STEPS.CalcMinAveMax()
+function Steps.CalcMinAveMax()
 	-- returns: min, ave, max
 	local min, ave, max
 	local sum, count = 0, 0
 	local dateStr = date("%Y%m%d")
-	for date, struct in pairs( STEPS.mine ) do
+	for date, struct in pairs( Steps.mine ) do
 		if string.len(date) == 8 and date ~= dateStr and struct.steps > 0 then
 			dSteps = struct.steps
 			min = min and math.min(min, dSteps) or dSteps
@@ -302,8 +302,8 @@ function STEPS.CalcMinAveMax()
 		   (max and math.floor(max) or 0)
 end
 -- Support
-function STEPS.Prune()
-	local pruneTS = time() - ( STEPS.pruneDays * 86400 )
+function Steps.Prune()
+	local pruneTS = time() - ( Steps.pruneDays * 86400 )
 	for r, _ in pairs( Steps_data ) do
 		local ncount = 0
 		for n, _ in pairs( Steps_data[r] ) do
@@ -332,15 +332,15 @@ function STEPS.Prune()
 		end
 	end
 end
-function STEPS.Print( msg, showName)
+function Steps.Print( msg, showName)
 	-- print to the chat frame
 	-- set showName to false to suppress the addon name printing
 	if (showName == nil) or (showName) then
-		msg = COLOR_GOLD..STEPS_MSG_ADDONNAME.."> "..COLOR_END..msg
+		msg = COLOR_GOLD..Steps_MSG_ADDONNAME.."> "..COLOR_END..msg
 	end
 	DEFAULT_CHAT_FRAME:AddMessage( msg )
 end
-function STEPS.ParseCmd(msg)
+function Steps.ParseCmd(msg)
 	if msg then
 		msg = string.lower(msg)
 		local a,b,c = strfind(msg, "(%S+)")  --contiguous string of non-space characters
@@ -352,50 +352,50 @@ function STEPS.ParseCmd(msg)
 		end
 	end
 end
-function STEPS.Command( msg )
-	local cmd, param = STEPS.ParseCmd(msg)
-	if STEPS.commandList[cmd] and STEPS.commandList[cmd].alias then
-		cmd = STEPS.commandList[cmd].alias
+function Steps.Command( msg )
+	local cmd, param = Steps.ParseCmd(msg)
+	if Steps.commandList[cmd] and Steps.commandList[cmd].alias then
+		cmd = Steps.commandList[cmd].alias
 	end
-	local cmdFunc = STEPS.commandList[cmd]
+	local cmdFunc = Steps.commandList[cmd]
 	if cmdFunc and cmdFunc.func then
 		cmdFunc.func(param)
 	else
-		STEPS.PrintHelp()
+		Steps.PrintHelp()
 	end
 end
-function STEPS.PrintHelp()
-	STEPS.Print( string.format(STEPS.L["%s (%s) by %s"], STEPS_MSG_ADDONNAME, STEPS_MSG_VERSION, STEPS_MSG_AUTHOR ) )
-	for cmd, info in pairs(STEPS.commandList) do
+function Steps.PrintHelp()
+	Steps.Print( string.format(Steps.L["%s (%s) by %s"], Steps_MSG_ADDONNAME, Steps_MSG_VERSION, Steps_MSG_AUTHOR ) )
+	for cmd, info in pairs(Steps.commandList) do
 		if info.help then
 			local cmdStr = cmd
-			for c2, i2 in pairs(STEPS.commandList) do
+			for c2, i2 in pairs(Steps.commandList) do
 				if i2.alias and i2.alias == cmd then
 					cmdStr = string.format( "%s / %s", cmdStr, c2 )
 				end
 			end
-			STEPS.Print(string.format("%s %s %s -> %s",
-				SLASH_STEPS1, cmdStr, info.help[1], info.help[2]))
+			Steps.Print(string.format("%s %s %s -> %s",
+				SLASH_Steps1, cmdStr, info.help[1], info.help[2]))
 		end
 	end
 end
-function STEPS.ChangeDisplay()
+function Steps.ChangeDisplay()
 end
 -- UI
-function STEPS.OnDragStart()
+function Steps.OnDragStart()
 	if Steps_options.unlocked then
 		Steps_Frame:StartMoving()
 	end
 end
-function STEPS.OnDragStop()
+function Steps.OnDragStop()
 	Steps_Frame:StopMovingOrSizing()
 end
-function STEPS.UIReset()
+function Steps.UIReset()
 	Steps_Frame:SetSize( 200, 12 )
 	Steps_Frame:ClearAllPoints()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
 end
-function STEPS.DeNormalizeRealm( realm )
+function Steps.DeNormalizeRealm( realm )
 	local realmOut = ""
 	for s in string.gmatch( realm, "(.)" ) do
 		if string.find( s, "[A-Z]" ) then
@@ -409,7 +409,7 @@ function STEPS.DeNormalizeRealm( realm )
 	end
 	return string.sub( realmOut, 2, -1 )
 end
-function STEPS.GetTodayTotal( name, realm )
+function Steps.GetTodayTotal( name, realm )
 	if name and Steps_data[realm] and Steps_data[realm][name] then
 		for dayBack = -1,1 do
 			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
@@ -421,7 +421,7 @@ function STEPS.GetTodayTotal( name, realm )
 	end
 end
 -- Tooltip
-function STEPS.TooltipSetUnit( arg1, arg2 )
+function Steps.TooltipSetUnit( arg1, arg2 )
 	local name = GameTooltip:GetUnit()
 	local realm = ""
 	if UnitName( "mouseover" ) == name then
@@ -430,29 +430,29 @@ function STEPS.TooltipSetUnit( arg1, arg2 )
 			realm = GetRealmName()
 		end
 	end
-	today, total = STEPS.GetTodayTotal( name, realm )
+	today, total = Steps.GetTodayTotal( name, realm )
 	if today then
 		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
 	end
 end
 -- DropDownMenu
-function STEPS.ModifyMenu( owner, rootDescription, contextData )
-	today, total = STEPS.GetTodayTotal( contextData.name, (contextData.server and STEPS.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
+function Steps.ModifyMenu( owner, rootDescription, contextData )
+	today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
 	if today then
 		rootDescription:CreateDivider()
 		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
 	end
 end
-Menu.ModifyMenu("MENU_UNIT_SELF", STEPS.ModifyMenu)
-Menu.ModifyMenu("MENU_UNIT_COMMUNITIES_GUILD_MEMBER", STEPS.ModifyMenu)
-Menu.ModifyMenu("MENU_UNIT_PARTY", STEPS.ModifyMenu)
-Menu.ModifyMenu("MENU_UNIT_RAID", STEPS.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_COMMUNITIES_GUILD_MEMBER", Steps.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_PARTY", Steps.ModifyMenu)
+Menu.ModifyMenu("MENU_UNIT_RAID", Steps.ModifyMenu)
 -- Post
-function STEPS.GetPostString()
+function Steps.GetPostString()
 	local dateStr = date("%Y%m%d")
-	return string.format("%s: %i", STEPS.L["My steps today"], math.floor( STEPS.mine[dateStr].steps or "0" ) )
+	return string.format("%s: %i", Steps.L["My steps today"], math.floor( Steps.mine[dateStr].steps or "0" ) )
 end
-function STEPS.Post( param )
+function Steps.Post( param )
 	local chatChannel, toWhom
 	if( param ) then
 		if( param == "say" ) then
@@ -475,12 +475,12 @@ function STEPS.Post( param )
 		end
 
 		if( chatChannel ) then
-			SendChatMessage( STEPS.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
-			STEPS.SendMessages()
+			SendChatMessage( Steps.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
+			Steps.SendMessages()
 		end
 	end
 end
-function STEPS.UpdateBars()
+function Steps.UpdateBars()
 	if Steps_options.show then
 		Steps_Frame:SetAlpha(1)
 	else
@@ -490,66 +490,66 @@ function STEPS.UpdateBars()
 	end
 end
 
-STEPS.commandList = {
-	[STEPS.L["help"]] = {
-		["func"] = STEPS.PrintHelp,
-		["help"] = {"",STEPS.L["Print this help."]}
+Steps.commandList = {
+	[Steps.L["help"]] = {
+		["func"] = Steps.PrintHelp,
+		["help"] = {"",Steps.L["Print this help."]}
 	},
-	[STEPS.L["show"]] = {
-		["func"] = function() Steps_options.show = not Steps_options.show; STEPS.UpdateBars(); end,
-		["help"] = {"", STEPS.L["Toggle display."]}
+	[Steps.L["show"]] = {
+		["func"] = function() Steps_options.show = not Steps_options.show; Steps.UpdateBars(); end,
+		["help"] = {"", Steps.L["Toggle display."]}
 	},
-	[STEPS.L["lock"]] = {
+	[Steps.L["lock"]] = {
 		["func"] = function() Steps_options.unlocked = not Steps_options.unlocked
-						STEPS.Print( Steps_options.unlocked and STEPS.L["UI unlocked"] or STEPS.L["UI locked"] )
+						Steps.Print( Steps_options.unlocked and Steps.L["UI unlocked"] or Steps.L["UI locked"] )
 					end,
-		["help"] = {"", STEPS.L["Toggle display lock."]}
+		["help"] = {"", Steps.L["Toggle display lock."]}
 	},
-	[STEPS.L["reset"]] = {
-		["func"] = STEPS.UIReset,
-		["help"] = {"", STEPS.L["Reset the position of the UI"]}
+	[Steps.L["reset"]] = {
+		["func"] = Steps.UIReset,
+		["help"] = {"", Steps.L["Reset the position of the UI"]}
 	},
-	[STEPS.L["chat"]] = {
+	[Steps.L["chat"]] = {
 		["func"] = function() Steps_options.enableChat = not Steps_options.enableChat;
 						if Steps_options.enableChat then
-							if not STEPS.OriginalSendChatMessage then
-								STEPS.InitChat()
+							if not Steps.OriginalSendChatMessage then
+								Steps.InitChat()
 							end
-							STEPS.Print(STEPS.L["{steps} now enabled."])
+							Steps.Print(Steps.L["{steps} now enabled."])
 						else
-							STEPS.Print(STEPS.L["Please /reload to disable chat integration."])
+							Steps.Print(Steps.L["Please /reload to disable chat integration."])
 						end
 					end,
-		["help"] = {"", STEPS.L["Toggle chat {steps} integration."]}
+		["help"] = {"", Steps.L["Toggle chat {steps} integration."]}
 	},
-	[STEPS.L["say"]] = {
-		["func"] = function() STEPS.Post("say") end,
+	[Steps.L["say"]] = {
+		["func"] = function() Steps.Post("say") end,
 		["help"] = { "| guild | party | instance | raid | whisper <playerName>", "Post steps report to channel or player."}
 	},
-	[STEPS.L["yell"]] = {
-		["func"] = function() STEPS.Post("yell") end,
+	[Steps.L["yell"]] = {
+		["func"] = function() Steps.Post("yell") end,
 	},
-	[STEPS.L["guild"]] = {
-		["func"] = function() STEPS.Post("guild") end,
+	[Steps.L["guild"]] = {
+		["func"] = function() Steps.Post("guild") end,
 	},
-	[STEPS.L["party"]] = {
-		["func"] = function() STEPS.Post("party") end,
+	[Steps.L["party"]] = {
+		["func"] = function() Steps.Post("party") end,
 	},
-	[STEPS.L["instance"]] = {
-		["func"] = function() STEPS.Post("instance") end,
+	[Steps.L["instance"]] = {
+		["func"] = function() Steps.Post("instance") end,
 	},
-	[STEPS.L["raid"]] = {
-		["func"] = function() STEPS.Post("raid") end,
+	[Steps.L["raid"]] = {
+		["func"] = function() Steps.Post("raid") end,
 	},
-	[STEPS.L["whisper"]] = {
-		["func"] = function(target) STEPS.Post(target) end,
+	[Steps.L["whisper"]] = {
+		["func"] = function(target) Steps.Post(target) end,
 	},
 	["debug"] = {
-		["func"] = function() STEPS.debug = not STEPS.debug end
+		["func"] = function() Steps.debug = not Steps.debug end
 	},
-	-- [STEPS.L["display"]] = {
-	-- 	["func"] = STEPS.ChangeDisplay,
-	-- 	["help"] = {"",STEPS.L["Cycle through display options."]}
+	-- [Steps.L["display"]] = {
+	-- 	["func"] = Steps.ChangeDisplay,
+	-- 	["help"] = {"",Steps.L["Cycle through display options."]}
 	-- },
 }
 
