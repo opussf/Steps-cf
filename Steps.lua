@@ -1,4 +1,4 @@
--- Steps 2.0.5
+-- Steps 2.0.6
 Steps_SLUG, Steps   = ...
 Steps_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Title" )
 Steps_MSG_VERSION   = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Version" )
