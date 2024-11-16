@@ -1,8 +1,8 @@
--- Steps 2.0.6
-Steps_SLUG, Steps   = ...
-Steps_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Title" )
-Steps_MSG_VERSION   = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Version" )
-Steps_MSG_AUTHOR    = C_AddOns.GetAddOnMetadata( Steps_SLUG, "Author" )
+-- Steps 2.0.7
+STEPS_SLUG, Steps   = ...
+STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
+STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
+STEPS_MSG_AUTHOR    = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Author" )
 
 -- Colours
 COLOR_RED = "|cffff0000"
@@ -28,8 +28,8 @@ Steps.stepsColor = { 0.73, 0.52, 0.18, 1 }
 
 -- Setup
 function Steps.OnLoad()
-	SLASH_Steps1 = "/Steps"
-	SlashCmdList["Steps"] = function(msg) Steps.Command(msg); end
+	SLASH_STEPS1 = "/Steps"
+	SlashCmdList["STEPS"] = function(msg) Steps.Command(msg) end
 	Steps.lastSpeed = 0
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
 	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
@@ -82,9 +82,15 @@ function Steps.SendMessages()
 	end
 	Steps.totalC = math.floor( Steps.mine.steps / 100 )
 end
-Steps.LOADING_SCREEN_DISABLED = Steps.SendMessages
-Steps.GROUP_ROSTER_UPDATE = Steps.SendMessages
-Steps.INSTANCE_GROUP_SIZE_CHANGED = Steps.SendMessages
+function Steps.LOADING_SCREEN_DISABLED()
+	Steps.SendMessages()
+end
+function Steps.GROUP_ROSTER_UPDATE()
+	Steps.SendMessages()
+end
+function Steps.INSTANCE_GROUP_SIZE_CHANGED()
+	Steps.SendMessages()
+end
 function Steps.CHAT_MSG_ADDON(...)
 	self, prefix, message, distType, sender = ...
 	-- Steps.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
@@ -127,7 +133,7 @@ end
 function Steps.BuildAddonMessage2()
 	local prefixLen = string.len( Steps.commPrefix ) + 1
 	local msgStr = string.format("%s|%s|%s|%s",
-			Steps_MSG_VERSION, Steps.realm, Steps.name, select(2, Steps.toBytes( math.ceil( Steps.mine.steps ) ) )
+			STEPS_MSG_VERSION, Steps.realm, Steps.name, select(2, Steps.toBytes( math.ceil( Steps.mine.steps ) ) )
 	)
 	for dayBack=0,Steps.pruneDays do
 		dayStr = date("%Y%m%d", time() - (dayBack*86400) )
@@ -146,7 +152,7 @@ function Steps.BuildAddonMessage2()
 end
 function Steps.BuildAddonMessage()
 	Steps.addonMsgTable = {}
-	table.insert( Steps.addonMsgTable, "v:"..Steps_MSG_VERSION )
+	table.insert( Steps.addonMsgTable, "v:"..STEPS_MSG_VERSION )
 	table.insert( Steps.addonMsgTable, "r:"..Steps.realm )
 	table.insert( Steps.addonMsgTable, "n:"..Steps.name )
 	table.insert( Steps.addonMsgTable, "s:"..math.ceil( Steps.mine.steps ) )
@@ -165,7 +171,7 @@ end
 Steps.keyFunctions = {
 	v = function(val)
 		Steps.importVersion = val
-		if not Steps.versionAlerted and Steps.VersionStrToVal(val) > Steps.VersionStrToVal( Steps_MSG_VERSION ) then
+		if not Steps.versionAlerted and Steps.VersionStrToVal(val) > Steps.VersionStrToVal( STEPS_MSG_VERSION ) then
 			Steps.versionAlerted = true
 			Steps.Print(Steps.L["A new version of Steps is available."])
 		end
@@ -279,7 +285,7 @@ function Steps.OnUpdate()
 	end
 	Steps.lastUpdate = nowTS
 	if math.floor( Steps.mine.steps / 100 ) > Steps.totalC then
-		Steps.LOADING_SCREEN_DISABLED()
+		Steps.SendMessages()
 	end
 end
 function Steps.CalcMinAveMax()
@@ -336,7 +342,7 @@ function Steps.Print( msg, showName)
 	-- print to the chat frame
 	-- set showName to false to suppress the addon name printing
 	if (showName == nil) or (showName) then
-		msg = COLOR_GOLD..Steps_MSG_ADDONNAME.."> "..COLOR_END..msg
+		msg = COLOR_GOLD..STEPS_MSG_ADDONNAME.."> "..COLOR_END..msg
 	end
 	DEFAULT_CHAT_FRAME:AddMessage( msg )
 end
@@ -365,7 +371,7 @@ function Steps.Command( msg )
 	end
 end
 function Steps.PrintHelp()
-	Steps.Print( string.format(Steps.L["%s (%s) by %s"], Steps_MSG_ADDONNAME, Steps_MSG_VERSION, Steps_MSG_AUTHOR ) )
+	Steps.Print( string.format(Steps.L["%s (%s) by %s"], STEPS_MSG_ADDONNAME, STEPS_MSG_VERSION, STEPS_MSG_AUTHOR ) )
 	for cmd, info in pairs(Steps.commandList) do
 		if info.help then
 			local cmdStr = cmd
@@ -375,12 +381,12 @@ function Steps.PrintHelp()
 				end
 			end
 			Steps.Print(string.format("%s %s %s -> %s",
-				SLASH_Steps1, cmdStr, info.help[1], info.help[2]))
+				SLASH_STEPS1, cmdStr, info.help[1], info.help[2]))
 		end
 	end
 end
-function Steps.ChangeDisplay()
-end
+-- function Steps.ChangeDisplay()
+-- end
 -- UI
 function Steps.OnDragStart()
 	if Steps_options.unlocked then
@@ -552,14 +558,3 @@ Steps.commandList = {
 	-- 	["help"] = {"",Steps.L["Cycle through display options."]}
 	-- },
 }
-
-
---[[
-https://wowwiki-archive.fandom.com/wiki/API_GetUnitSpeed
-value = GetUnitSpeed("unit")
-
-Player unit moving at 100% -- value = 7
-Player unit moving at 175% -- value = 12.25
-Player unit moving at 200% -- value = 14
-
-]]
