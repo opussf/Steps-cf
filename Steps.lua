@@ -1,4 +1,4 @@
--- Steps 2.0.7
+-- Steps 2.0.8
 STEPS_SLUG, Steps   = ...
 STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -92,8 +92,8 @@ function Steps.INSTANCE_GROUP_SIZE_CHANGED()
 	Steps.SendMessages()
 end
 function Steps.CHAT_MSG_ADDON(...)
-	self, prefix, message, distType, sender = ...
-	-- Steps.Print( "p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender )
+	local _, prefix, message, distType, sender = ...
+	if Steps.debug then print( "msg< p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender ) end
 	if prefix == Steps.commPrefix and sender ~= Steps.name.."-"..Steps.msgRealm then
 		if string.find(message, "v:") then
 			Steps.DecodeMessage( message )
@@ -106,6 +106,7 @@ function Steps.toBytes(num)
 	-- print( "toBytes( "..num.." )" )
 	-- returns a table and string of bytes.  MSB first
 	local t = {} -- will contain the bits
+	local strOut
 	if num == 0 then
 		t[1] = 128
 		strOut = string.char(128)
@@ -295,7 +296,7 @@ function Steps.CalcMinAveMax()
 	local dateStr = date("%Y%m%d")
 	for date, struct in pairs( Steps.mine ) do
 		if string.len(date) == 8 and date ~= dateStr and struct.steps > 0 then
-			dSteps = struct.steps
+			local dSteps = struct.steps
 			min = min and math.min(min, dSteps) or dSteps
 			max = max and math.max(max, dSteps) or dSteps
 			count = count + 1
@@ -416,6 +417,7 @@ function Steps.DeNormalizeRealm( realm )
 	return string.sub( realmOut, 2, -1 )
 end
 function Steps.GetTodayTotal( name, realm )
+	local today = 0
 	if name and Steps_data[realm] and Steps_data[realm][name] then
 		for dayBack = -1,1 do
 			local dateStr = date("%Y%m%d", time() + (dayBack*86400))
@@ -436,14 +438,16 @@ function Steps.TooltipSetUnit( arg1, arg2 )
 			realm = GetRealmName()
 		end
 	end
-	today, total = Steps.GetTodayTotal( name, realm )
+	local today, total = Steps.GetTodayTotal( name, realm )
+	if Steps.debug then print( name, realm, today, total ) end
 	if today then
 		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
 	end
 end
 -- DropDownMenu
 function Steps.ModifyMenu( owner, rootDescription, contextData )
-	today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
+	if Steps.debug then print( owner, rootDescription, contextData ) end
+	local today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
 	if today then
 		rootDescription:CreateDivider()
 		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
@@ -551,7 +555,7 @@ Steps.commandList = {
 		["func"] = function(target) Steps.Post(target) end,
 	},
 	["debug"] = {
-		["func"] = function() Steps.debug = not Steps.debug end
+		["func"] = function() Steps.debug = not Steps.debug; Steps.Print( "Debug is "..(Steps.debug and "On" or "Off") ) end
 	},
 	-- [Steps.L["display"]] = {
 	-- 	["func"] = Steps.ChangeDisplay,

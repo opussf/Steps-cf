@@ -1,4 +1,4 @@
--- StepsOptions 2.0.7
+-- StepsOptions 2.0.8
 function Steps.OptionsPanel_OnLoad( panel )
 	panel.name = "Steps"
 	StepsOptionsFrame_Title:SetText(STEPS_MSG_ADDONNAME.." v"..STEPS_MSG_VERSION)
@@ -34,7 +34,6 @@ function Steps.OptionPanel_KeepOriginalValue( option )
 	end
 end
 function Steps.OptionsPanel_CheckButton_OnLoad( self, option, text )
-	--FB.Print("CheckButton_OnLoad( "..option..", "..text.." ) -> "..(FB_options[option] and "checked" or "nil"));
 	getglobal(self:GetName().."Text"):SetText(text)
 	self:SetChecked(Steps_options[option])
 end
