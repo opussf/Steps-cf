@@ -1,0 +1,155 @@
+<!-- Steps 2.1 -->
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+
+	<StatusBar name="Steps_TrendBarTemplate" orientation="VERTICAL" virtual="true">
+		<Size x="30" y="200" />
+		<BarTexture file="Interface\TARGETINGFRAME\UI-StatusBar" />
+		<BarColor r="1.0" g="0.23" b="0.19" />
+		<Scripts>
+			<OnEnter>
+				local myName = self:GetName()
+				local index = string.match( myName, "Steps_MineBar(%d+)" )
+				if index then
+					local histBar = _G["Steps_HistBar"..index]
+					if histBar then
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT" )
+						GameTooltip:SetText("Steps: \nMine: "..self:GetValue().."\nTotal: "..histBar:GetValue() )
+						GameTooltip:Show()
+					end
+				end
+			</OnEnter>
+			<OnLeave>GameTooltip:Hide()</OnLeave>
+		</Scripts>
+	</StatusBar>
+	<Button name="Steps_XAxisButtonTemplate" inherits="UIPanelButtonTemplate" frameStrata="MEDIUM" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBG" setAllPoints="true">
+					<Color r="0.15" g="0.13" b="0.08" a="1"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>self:Disable()
+				self:SetNormalTexture("")
+				self:SetHighlightTexture("")
+				self:SetPushedTexture("")
+				self:SetDisabledTexture("")
+			</OnLoad>
+		</Scripts>
+	</Button>
+	<Button name="Steps_MenuButtonTemplate" inherits="UIPanelButtonTemplate" frameStrata="MEDIUM" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBG" setAllPoints="true">
+					<Color r="0.15" g="0.13" b="0.08" a="1"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>self:Enable()
+				self:SetNormalTexture("")
+				self:SetHighlightTexture("")
+				self:SetPushedTexture("")
+				self:SetDisabledTexture("")
+			</OnLoad>
+		</Scripts>
+	</Button>
+	<Frame name="StepsUI_Frame" frameStrata="BACKGROUND" toplevel="false" enableMouse="false" movable="true" parent="UIParent">
+		<Size>
+			<AbsDimension x="210" y="240"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture setAllPoints="true">
+					<Color r="0" g="0" b="0" a="1" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parent_Close" inherits="UIPanelCloseButton" parent="StepsUI_Frame">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset x="0" y="0"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="StepsUI_Choice1" inherits="Steps_MenuButtonTemplate" parent="StepsUI_Frame" text="W">
+				<Size>
+					<AbsDimension x="37" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>Steps.ShowWeek()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="StepsUI_Choice2" inherits="Steps_MenuButtonTemplate" parent="StepsUI_Frame" text="2W">
+				<Size>
+					<AbsDimension x="37" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="StepsUI_Choice1"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>Steps.Show2Week()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="StepsUI_Choice3" inherits="Steps_MenuButtonTemplate" parent="StepsUI_Frame" text="M">
+				<Size>
+					<AbsDimension x="37" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="StepsUI_Choice2"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>Steps.ShowMonth()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="StepsUI_Choice4" inherits="Steps_MenuButtonTemplate" parent="StepsUI_Frame" text="2M">
+				<Size>
+					<AbsDimension x="37" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="StepsUI_Choice3"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>Steps.Show2Month()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="StepsUI_Choice5" inherits="Steps_MenuButtonTemplate" parent="StepsUI_Frame" text="3M">
+				<Size>
+					<AbsDimension x="37" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="StepsUI_Choice4"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>Steps.Show3Month()</OnClick>
+				</Scripts>
+			</Button>
+			<Frame name="StepsUI_BarFrame">
+				<Size>
+					<AbsDimension x="210" y="200"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>self:Hide()</OnLoad>
+		</Scripts>
+	</Frame>
+</Ui>

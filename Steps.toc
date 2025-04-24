@@ -1,8 +1,8 @@
 ## Title: Steps
 ## Interface: 110105
-## Notes: Steps (2.0.10)
+## Notes: Steps (2.1)
 ## Author: opussf
-## Version: 2.0.10
+## Version: 2.1
 ## Description: Track how many steps you have taken
 ## Description-frFR: Displays a message greeting France
 ## Description-deDE: Displays a message greeting Germany
@@ -19,3 +19,5 @@ Steps.xml
 StepsChat.lua
 StepsOptions.lua
 StepsOptions.xml
+StepsUI.lua
+StepsUI.xml

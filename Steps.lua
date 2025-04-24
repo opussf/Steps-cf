@@ -1,4 +1,4 @@
--- Steps 2.0.10
+-- Steps 2.1
 STEPS_SLUG, Steps   = ...
 STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -396,6 +396,9 @@ function Steps.OnDragStart()
 end
 function Steps.OnDragStop()
 	Steps_Frame:StopMovingOrSizing()
+	if not Steps_options.unlocked then
+		Steps.ShowTrend()
+	end
 end
 function Steps.UIReset()
 	Steps_Frame:SetSize( 200, 12 )
@@ -553,6 +556,9 @@ Steps.commandList = {
 	},
 	[Steps.L["whisper"]] = {
 		["func"] = function(target) Steps.Post(target) end,
+	},
+	[Steps.L["trend"]] = {
+		["func"] = function() Steps.ShowTrend() end,
 	},
 	["debug"] = {
 		["func"] = function() Steps.debug = not Steps.debug; Steps.Print( "Debug is "..(Steps.debug and "On" or "Off") ) end
