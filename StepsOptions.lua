@@ -1,6 +1,6 @@
--- StepsOptions 2.1
+-- StepsOptions 2.1.1
 function Steps.OptionsPanel_OnLoad( panel )
-	panel.name = "Steps"
+	panel.name = Steps.L["Steps"]
 	StepsOptionsFrame_Title:SetText(STEPS_MSG_ADDONNAME.." v"..STEPS_MSG_VERSION)
 
 	-- These NEED to be set
@@ -43,7 +43,7 @@ function Steps.OptionsPanel_CheckButton_OnClick( self, option )
 	Steps_options[option] = self:GetChecked()
 end
 
-Steps.commandList["options"] = {
+Steps.commandList[Steps.L["options"]] = {
 	["func"] = function() Settings.OpenToCategory( StepsOptionsFrame.category:GetID() ) end,
-	["help"] = {"", "Open the options panel"},
+	["help"] = {"", Steps.L["Open the options panel"]},
 }

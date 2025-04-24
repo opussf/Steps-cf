@@ -1,19 +1,28 @@
 ## Title: Steps
 ## Interface: 110105
-## Notes: Steps (2.1)
+## Notes: Steps (2.1.1)
+## Notes-frFR: Compteur de pas. Affiche le nombre de pas quotidiens de votre personnage.
+## Notes-frDE: Schrittzähler. Zeigt die täglichen Schritte Ihres Charakters an.
+## Notes-frES: Contador de pasos. Muestra los pasos diarios de tu personaje.
+## Notes-frMX: Contador de pasos. Muestra los pasos diarios de tu personaje.
+## Notes-ptBR: Contador de passos. Mostra os passos diários do seu personagem.
+## Notes-ruRU: Счетчик шагов. Показывает ежедневные шаги Вашего персонажа.
 ## Author: opussf
-## Version: 2.1
+## Version: 2.1.1
 ## Description: Track how many steps you have taken
-## Description-frFR: Displays a message greeting France
-## Description-deDE: Displays a message greeting Germany
-## Description-esES: Displays a message greeting Spanish
-## Description-esMX: Displays a message greeting Mexico
+## Description-frFR: Suivez le nombre de pas que vous avez effectués
+## Description-deDE: Verfolgen Sie, wie viele Schritte Sie gemacht haben
+## Description-esES: Realiza un seguimiento de cuántos pasos has dado
+## Description-esMX: Realiza un seguimiento de cuántos pasos has dado
+## Description-ptBR: Acompanhe quantos passos você deu
+## Description-ruRU: Отслеживайте, сколько шагов Вы сделали
 ## SavedVariables: Steps_data Steps_options
 localization_core.lua
 localization_de.lua
 localization_fr.lua
 localization_es.lua
 localization_pt.lua
+localization_ru.lua
 Steps.lua
 Steps.xml
 StepsChat.lua

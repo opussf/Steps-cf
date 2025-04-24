@@ -1,18 +1,5 @@
-Changes since 2.1..
+Changes since 2.1.1..
 
-* 34a229f 2025-04-24 13:59:42 -0700 -  (HEAD -> master, tag: 2.1, origin/master) Merge branch 'develop' <opussf>
-* c66dc1a 2025-04-24 13:59:18 -0700 -  (origin/develop, develop) Remove test output <opussf>
-* 773d11d 2025-04-24 13:58:33 -0700 -  Merge branch 'trend' into develop <opussf>
-* ef6c2c3 2025-04-24 13:57:37 -0700 -  Display Tests <opussf>
-* 6bcfa2f 2025-04-24 01:41:52 -0700 -  New tests <opussf>
-* 60e9c88 2025-04-23 22:23:48 -0700 -  Comment Debug prints <opussf>
-* 3a5ab88 2025-04-23 22:17:50 -0700 -  This works until I can prove otherwise. <opussf>
-* aa9a936 2025-04-23 21:03:02 -0700 -  Working, need to debug Month <opussf>
-* ba0ebaa 2025-04-23 14:28:01 -0700 -  Put debug info behind debug flag, and 2Week function. <opussf>
-* 5235429 2025-04-23 14:00:02 -0700 -  Showing 1Week, with a tooltip, and buttons to change to a new report. <opussf>
-* 6c6e291 2025-04-22 23:39:15 -0700 -  x-axis buttons have day labels, Adjust frame size, set color <opussf>
-* 1da0b7f 2025-04-22 23:11:24 -0700 -  Adding x-axis buttons <opussf>
-* 042f0f2 2025-04-22 17:06:48 -0700 -  Merge branch 'develop' into trend <opussf>
-* 08db818 2025-04-22 17:04:25 -0700 -  Dual Bars <opussf>
-* a9cd384 2025-04-22 11:00:54 -0700 -  It works - ish <opussf>
-* 779e82e 2025-04-22 01:08:26 -0700 -  Initial Trend charts <opussf>
+* 3a4623b 2025-04-24 15:11:03 -0700 -  (HEAD -> master, tag: 2.1.1) Merge branch 'develop' - Translations <opussf>
+* 86d207d 2025-04-24 15:10:34 -0700 -  (develop) Merge branch 'translations' into develop <opussf>
+* fb98104 2025-04-24 15:09:43 -0700 -  (translations) Expanded translations, including new Russian <opussf>
