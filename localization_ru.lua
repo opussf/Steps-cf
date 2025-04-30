@@ -30,6 +30,7 @@ if GetLocale() == "ruRU" then
 	L.L["Toggle display lock."] = "Заблокировать/разблокировать отображение."
 	L.L["Toggle display."] = "Включить/выключить отображение."
 	L.L["Total"] = "Всего"
+	L.L["total"] = "всего"
 	L.L["trend"] = "тренд"
 	L.L["UI locked"] = "Интерфейс заблокирован"
 	L.L["UI unlocked"] = "Интерфейс разблокирован"

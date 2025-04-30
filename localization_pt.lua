@@ -30,6 +30,7 @@ if GetLocale() == "ptBR" then
 	L.L["Toggle display lock."] = "Bloquear ou desbloquear a exibição."
 	L.L["Toggle display."] = "Alternar exibição."
 	L.L["Total"] = "Total"
+	L.L["total"] = "total"
 	L.L["trend"] = "tendência"
 	L.L["UI locked"] = "Interface bloqueada"
 	L.L["UI unlocked"] = "Interface desbloqueada"

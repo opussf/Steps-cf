@@ -30,6 +30,7 @@ if GetLocale() == "deDE" then
 	L.L["Toggle display lock."] = "Anzeige-Sperre umschalten."
 	L.L["Toggle display."] = "Anzeige umschalten."
 	L.L["Total"] = "Gesamt"
+	L.L["total"] = "gesamt"
 	L.L["trend"] = "Trend"
 	L.L["UI locked"] = "UI gesperrt"
 	L.L["UI unlocked"] = "UI entsperrt"
