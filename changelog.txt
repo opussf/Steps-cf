@@ -1,5 +1,12 @@
-Changes since 2.1.1..
+Changes since 2.1.2..
 
-* 3a4623b 2025-04-24 15:11:03 -0700 -  (HEAD -> master, tag: 2.1.1) Merge branch 'develop' - Translations <opussf>
-* 86d207d 2025-04-24 15:10:34 -0700 -  (develop) Merge branch 'translations' into develop <opussf>
-* fb98104 2025-04-24 15:09:43 -0700 -  (translations) Expanded translations, including new Russian <opussf>
+* 50f51d0 2025-04-29 23:15:12 -0700 -  (HEAD -> master, tag: 2.1.2, origin/master) Merge branch 'develop' <opussf>
+*   eb8c818 2025-04-29 23:04:54 -0700 -  (origin/develop, develop) Merge branch 'translations' into develop <opussf>
+|\  
+| * 96428e4 2025-04-29 23:00:47 -0700 -  (origin/translations, translations) Drop down translations <opussf>
+| * aa1c1ec 2025-04-29 22:39:16 -0700 -  Syntx fix and new phrase <opussf>
+| * 10c6670 2025-04-29 21:57:18 -0700 -  More translations <opussf>
+| * 5449fa1 2025-04-29 11:46:27 -0700 -  Put the alias first to let english override the alias with the command.ZZ <opussf>
+| * e259c31 2025-04-29 11:00:45 -0700 -  Dates, command aliases for chat option. <opussf>
+|/  
+* 7349096 2025-04-28 16:21:51 -0700 -  Possibly a better way of doing this. <opussf>

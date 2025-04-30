@@ -1,4 +1,4 @@
-<!-- Steps 2.1.1 -->
+<!-- Steps 2.1.2 -->
 <Ui xmlns="http://www.blizzard.com/wow/ui/"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.blizzard.com/wow/ui/
@@ -16,7 +16,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 					local histBar = _G["Steps_HistBar"..index]
 					if histBar then
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT" )
-						GameTooltip:SetText("Steps: \nMine: "..self:GetValue().."\nTotal: "..histBar:GetValue() )
+						GameTooltip:SetText(Steps.L["Steps"]..": \n"..Steps.L["Mine"]..": "..self:GetValue().."\n"..Steps.L["Total"]..": "..histBar:GetValue() )
 						GameTooltip:Show()
 					end
 				end
@@ -88,6 +88,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 					<Anchor point="TOPLEFT" relativePoint="TOPLEFT"/>
 				</Anchors>
 				<Scripts>
+					<OnLoad>self:SetText(Steps.L["W"])</OnLoad>
 					<OnClick>Steps.ShowWeek()</OnClick>
 				</Scripts>
 			</Button>
@@ -99,6 +100,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="StepsUI_Choice1"/>
 				</Anchors>
 				<Scripts>
+					<OnLoad>self:SetText(Steps.L["2W"])</OnLoad>
 					<OnClick>Steps.Show2Week()</OnClick>
 				</Scripts>
 			</Button>
@@ -110,6 +112,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="StepsUI_Choice2"/>
 				</Anchors>
 				<Scripts>
+					<OnLoad>self:SetText(Steps.L["M"])</OnLoad>
 					<OnClick>Steps.ShowMonth()</OnClick>
 				</Scripts>
 			</Button>
@@ -121,6 +124,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="StepsUI_Choice3"/>
 				</Anchors>
 				<Scripts>
+					<OnLoad>self:SetText(Steps.L["2M"])</OnLoad>
 					<OnClick>Steps.Show2Month()</OnClick>
 				</Scripts>
 			</Button>
@@ -132,6 +136,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="StepsUI_Choice4"/>
 				</Anchors>
 				<Scripts>
+					<OnLoad>self:SetText(Steps.L["3M"])</OnLoad>
 					<OnClick>Steps.Show3Month()</OnClick>
 				</Scripts>
 			</Button>
@@ -149,7 +154,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 			</Frame>
 		</Frames>
 		<Scripts>
-			<OnLoad>self:Hide()</OnLoad>
+			<OnLoad>self:Hide(); tinsert(UISpecialFrames, self:GetName())</OnLoad>
 		</Scripts>
 	</Frame>
 </Ui>

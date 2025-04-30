@@ -1,4 +1,4 @@
--- StepsChat.lua 2.1.1
+-- StepsChat.lua 2.1.2
 function Steps.InitChat()
 	Steps.OriginalSendChatMessage = SendChatMessage
 	SendChatMessage = Steps.SendChatMessage
@@ -13,7 +13,7 @@ function Steps.ReplaceMessage( msgIn )
 	--print( "msgIn: "..msgIn )
 	Steps.SendMessages()
 	msgNew = nil
-	local tokenStart, tokenEnd  = strfind( msgIn, "{[sS][tT][eE][pP][sS]*}" )
+	local tokenStart, tokenEnd  = strfind( msgIn, Steps.L["{[sS][tT][eE][pP][sS]*}"] )
 	if tokenStart then
 		msgNew = string.sub( msgIn, 1, tokenStart-1 )..
 				Steps.GetPostString()..

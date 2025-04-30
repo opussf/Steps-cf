@@ -1,4 +1,4 @@
--- Steps 2.1.1
+-- Steps 2.1.2
 STEPS_SLUG, Steps   = ...
 STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -25,10 +25,17 @@ Steps.ave = 0
 Steps.max = 0
 Steps.commPrefix = "STEPS"
 Steps.stepsColor = { 0.73, 0.52, 0.18, 1 }
+Steps.say = string.lower(_G["SAY"])
+Steps.guild = string.lower(_G["GUILD"])
+Steps.instance = string.lower(_G["INSTANCE"])
+Steps.party = string.lower(_G["PARTY"])
+Steps.raid = string.lower(_G["RAID"])
+Steps.whisper = string.lower(_G["WHISPER"])
+Steps.yell = string.lower(_G["YELL"])
 
 -- Setup
 function Steps.OnLoad()
-	SLASH_STEPS1 = "/Steps"
+	SLASH_STEPS1 = "/"..Steps.L["Steps"]
 	SlashCmdList["STEPS"] = function(msg) Steps.Command(msg) end
 	Steps.lastSpeed = 0
 	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
@@ -395,8 +402,9 @@ function Steps.OnDragStart()
 	end
 end
 function Steps.OnDragStop()
-	Steps_Frame:StopMovingOrSizing()
-	if not Steps_options.unlocked then
+	if Steps_options.unlocked then
+		Steps_Frame:StopMovingOrSizing()
+	else
 		Steps.ShowTrend()
 	end
 end
@@ -444,7 +452,7 @@ function Steps.TooltipSetUnit( arg1, arg2 )
 	local today, total = Steps.GetTodayTotal( name, realm )
 	if Steps.debug then print( name, realm, today, total ) end
 	if today then
-		GameTooltip:AddLine( "Steps today: "..today.." total: "..total )
+		GameTooltip:AddLine( Steps.L["Steps today"]..": "..today.." "..Steps.L["total"]..": "..total )
 	end
 end
 -- DropDownMenu
@@ -453,7 +461,7 @@ function Steps.ModifyMenu( owner, rootDescription, contextData )
 	local today, total = Steps.GetTodayTotal( contextData.name, (contextData.server and Steps.DeNormalizeRealm( contextData.server ) or GetRealmName()) )
 	if today then
 		rootDescription:CreateDivider()
-		rootDescription:CreateTitle("Steps today: "..today.." total: "..total)
+		rootDescription:CreateTitle( Steps.L["Steps today"]..": "..today.." "..Steps.L["total"]..": "..total )
 	end
 end
 Menu.ModifyMenu("MENU_UNIT_SELF", Steps.ModifyMenu)
@@ -535,26 +543,33 @@ Steps.commandList = {
 					end,
 		["help"] = {"", Steps.L["Toggle chat {steps} integration."]}
 	},
-	[Steps.L["say"]] = {
+	[Steps.say] = { ["alias"] = "say" },
+	["say"] = {
 		["func"] = function() Steps.Post("say") end,
 		["help"] = { "| guild | party | instance | raid | whisper <playerName>", "Post steps report to channel or player."}
 	},
-	[Steps.L["yell"]] = {
+	[Steps.yell] = { ["alias"] = "yell" },
+	["yell"] = {
 		["func"] = function() Steps.Post("yell") end,
 	},
-	[Steps.L["guild"]] = {
+	[Steps.guild] = { ["alias"] = "guild" },
+	["guild"] = {
 		["func"] = function() Steps.Post("guild") end,
 	},
-	[Steps.L["party"]] = {
+	[Steps.party] = { ["alias"] = "party" },
+	["party"] = {
 		["func"] = function() Steps.Post("party") end,
 	},
-	[Steps.L["instance"]] = {
+	[Steps.instance] = { ["alias"] = "instance" },
+	["instance"] = {
 		["func"] = function() Steps.Post("instance") end,
 	},
-	[Steps.L["raid"]] = {
+	[Steps.raid] = { ["alias"] = "raid" },
+	["raid"] = {
 		["func"] = function() Steps.Post("raid") end,
 	},
-	[Steps.L["whisper"]] = {
+	[Steps.whisper] = { ["alias"] = "whisper" },
+	["whisper"] = {
 		["func"] = function(target) Steps.Post(target) end,
 	},
 	[Steps.L["trend"]] = {

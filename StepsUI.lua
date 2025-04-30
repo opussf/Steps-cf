@@ -20,7 +20,7 @@ function Steps.ShowWeek()
 	end
 	local dayList = {}
 	for dayBack = 1, 7 do
-		table.insert( dayList, date( "%a", time() + (dayBack*86400) ) )
+		table.insert( dayList, Steps.L["dow"][tonumber( date( "%w", time() + (dayBack*86400) ) ) ] )
 	end
 	if Steps.AssureXAxis( 7, 30, dayList ) < 7 then
 		StepsUI_Frame:Hide()
@@ -65,7 +65,7 @@ function Steps.Show2Week()
 	end
 	local dayList = {}
 	for dayBack = 1, 14, 2 do
-		table.insert( dayList, date( "%a", time() + (dayBack*86400) ) )
+		table.insert( dayList, Steps.L["dow"][tonumber( date( "%w", time() + (dayBack*86400) ) ) ] )
 	end
 	if Steps.AssureXAxis( 7, 30, dayList ) < 7 then
 		StepsUI_Frame:Hide()
@@ -130,7 +130,7 @@ function Steps.ShowMonth()
 			barMax = max( barMax, barData[i][1] )
 		end
 		if dow == 0 then
-			table.insert( dayList, 1, date( "%d %b", time() - (dayBack*86400) ) )
+			table.insert( dayList, 1, date( "%d ", time() - (dayBack*86400) )..Steps.L["mon"][tonumber( date( "%m", time() - (dayBack*86400) ) ) ] )
 			i = i + 1
 		end
 	end
@@ -181,7 +181,7 @@ function Steps.Show2Month()
 		end
 		if dow == 0 then -- 0 = Sun
 			if i%2 == 0 then
-				table.insert( dayList, 1, string.sub( date( "%d%b", time() - (dayBack*86400) ), 1, 3 ) )
+				table.insert( dayList, 1, string.sub( date( "%d", time() - (dayBack*86400) )..Steps.L["mon"][tonumber( date( "%m", time() - (dayBack*86400) ) ) ], 1, 3 ) )
 			end
 			i = i + 1
 		end
@@ -232,7 +232,7 @@ function Steps.Show3Month()
 		end
 		if dow == 0 then -- 0 = Sun
 			if i%3 == 0 then
-				table.insert( dayList, 1, string.sub( date( "%d%b", time() - (dayBack*86400) ), 1, 3 ) )
+				table.insert( dayList, 1, string.sub( date( "%d", time() - (dayBack*86400) )..Steps.L["mon"][tonumber( date( "%m", time() - (dayBack*86400) ) ) ], 1, 3 ) )
 			end
 			i = i + 1
 		end
