@@ -5,7 +5,7 @@ Steps.HistBars = {}
 Steps.XAxis = {}
 
 function Steps.ShowTrend()
-	if StepsUI_Frame:IsVisible() then
+	if StepsUI_Frame:IsVisible() or InCombatLockdown() then
 		StepsUI_Frame:Hide()
 		return
 	end
