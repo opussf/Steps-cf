@@ -1,4 +1,4 @@
--- Steps 2.1.4
+-- Steps 2.1.5
 STEPS_SLUG, Steps   = ...
 STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -99,8 +99,8 @@ function Steps.INSTANCE_GROUP_SIZE_CHANGED()
 	Steps.SendMessages()
 end
 function Steps.CHAT_MSG_ADDON(...)
-	local _, prefix, message, distType, sender = ...
-	if Steps.debug then print( "msg< p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender ) end
+	local prefix, message, distType, sender = ...
+	if Steps.debug and prefix == Steps.commPrefix then print( "msg< p:"..prefix.." m:"..message.." d:"..distType.." s:"..sender ) end
 	if prefix == Steps.commPrefix and sender ~= Steps.name.."-"..Steps.msgRealm then
 		if string.find(message, "v:") then
 			Steps.DecodeMessage( message )
