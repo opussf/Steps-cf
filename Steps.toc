@@ -1,6 +1,6 @@
 ## Title: Steps
-## Interface: 110205
-## Notes: Steps (2.1.8)
+## Interface: 110207
+## Notes: Steps (2.1.9)
 ## Notes-frFR: Compteur de pas. Affiche le nombre de pas quotidiens de votre personnage.
 ## Notes-deDE: Schrittzähler. Zeigt die täglichen Schritte Ihres Charakters an.
 ## Notes-esES: Contador de pasos. Muestra los pasos diarios de tu personaje.
@@ -8,7 +8,7 @@
 ## Notes-ptBR: Contador de passos. Mostra os passos diários do seu personagem.
 ## Notes-ruRU: Счетчик шагов. Показывает ежедневные шаги Вашего персонажа.
 ## Author: opussf
-## Version: 2.1.8
+## Version: 2.1.9
 ## Description: Track how many steps you have taken
 ## Description-frFR: Suivez le nombre de pas que vous avez effectués
 ## Description-deDE: Verfolgen Sie, wie viele Schritte Sie gemacht haben
