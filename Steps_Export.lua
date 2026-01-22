@@ -1,5 +1,5 @@
 #!/usr/bin/env lua
--- Version: 2.1.9
+-- Version: 2.1.10
 
 accountPath = arg[1]
 exportType = arg[2]
