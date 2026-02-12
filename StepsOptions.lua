@@ -1,4 +1,4 @@
--- StepsOptions 2.1.10
+-- StepsOptions 2.1.11
 function Steps.OptionsPanel_OnLoad( panel )
 	panel.name = Steps.L["Steps"]
 	StepsOptionsFrame_Title:SetText(STEPS_MSG_ADDONNAME.." v"..STEPS_MSG_VERSION)

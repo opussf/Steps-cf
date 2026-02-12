@@ -1,4 +1,4 @@
--- Steps 2.1.10
+-- Steps 2.1.11
 STEPS_SLUG, Steps   = ...
 STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -497,7 +497,7 @@ function Steps.Post( param )
 			toWhom = param
 		end
 		if( chatChannel ) then
-			SendChatMessage( Steps.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
+			C_ChatInfo.SendChatMessage( Steps.GetPostString(), chatChannel, nil, toWhom )  -- toWhom will be nil for most
 			Steps.SendMessages()
 		end
 	end

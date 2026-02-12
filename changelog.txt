@@ -1,15 +1,4 @@
-Changes since 2.1.10..
+Changes since 2.1.11..
 
-* 5229f06 2026-01-21 18:26:10 -0800 -  (HEAD -> master, tag: 2.1.10, origin/master) Merge branch 'develop' <opussf>
-* e5ce703 2026-01-21 18:25:28 -0800 -  (develop) Stubs and cleaner tests <opussf>
-* a0cc614 2026-01-21 14:32:10 -0800 -  issecretvalue used for protection around Tooltip <opussf>
-* c4959ac 2025-12-27 23:03:55 -0800 -  Merge branch 'web' into develop <opussf>
-* 805b4ea 2025-12-27 22:06:47 -0800 -  (web) Timed reload <opussf>
-* f63aa73 2025-12-27 21:19:11 -0800 -  Merge branch 'develop' into web <opussf>
-* 25580be 2024-09-02 21:38:25 -0700 -  Push the graph init and callback into the dataload callback <opussf>
-* d0c355a 2024-09-02 21:21:16 -0700 -  Web changes <opussf>
-* 8cbb439 2024-08-29 09:48:18 -0700 -  When toggling a char off, show totals. <opussf>
-* 5d68858 2024-08-29 07:28:46 -0700 -  Put a calendar graph at the top of the page. <opussf>
-* aa27837 2024-08-28 09:51:32 -0700 -  Calendar chart <opussf>
-* 228233f 2024-08-27 23:27:31 -0700 -  Merge branch 'develop' into web <opussf>
-* 802465a 2024-08-27 23:25:11 -0700 -  Preserve web changes <opussf>
+* 2b94b49 2026-02-12 11:28:41 -0800 -  (HEAD -> master, tag: 2.1.11, origin/master, origin/HEAD) Merge branch 'develop' <opussf>
+* 9c55286 2026-02-12 11:28:06 -0800 -  (origin/develop, develop) Use C_ChatInfo, and update INTERFACE <opussf>
