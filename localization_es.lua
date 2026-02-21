@@ -48,4 +48,5 @@ if GetLocale() == "esES" or GetLocale() == "esMX" then
 	L.L["M"] = "M"
 	L.L["2M"] = "2M"
 	L.L["3M"] = "3M"
+	L.L["Display Reset. Set to visible, and in the BOTTOMLEFT."] = "Mostrar reinicio. Establézcalo como visible y en la esquina inferior izquierda."
 end

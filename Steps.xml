@@ -1,8 +1,17 @@
-<!-- Steps 2.1.11 -->
+<!-- Steps 2.1.12 -->
 <Ui xmlns="http://www.blizzard.com/wow/ui/"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\FrameXML\UI.xsd">
+
+	<Frame name="Steps_EventFrame" frameStrata="BACKGROUND" toplevel="false" enableMouse="false" movable="false" parent="UIParent">
+		<Scripts>
+			<OnLoad>Steps.OnLoad()</OnLoad>
+			<OnUpdate>Steps.OnUpdate()</OnUpdate>
+			<OnEvent>Steps[event]( ... )</OnEvent>
+		</Scripts>
+	</Frame>
+
 
 	<Frame name="Steps_Frame" frameStrata="BACKGROUND" toplevel="false" enableMouse="true" movable="true" parent="UIParent">
 		<Size>
@@ -63,9 +72,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 			</StatusBar>
 		</Frames>
 		<Scripts>
-			<OnLoad>Steps.OnLoad()</OnLoad>
-			<OnUpdate>Steps.OnUpdate()</OnUpdate>
-			<OnEvent>Steps[event]( ... )</OnEvent>
 			<OnMouseDown>Steps.OnDragStart()</OnMouseDown>
 			<OnMouseUp>Steps.OnDragStop()</OnMouseUp>
 		</Scripts>

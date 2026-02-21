@@ -48,4 +48,5 @@ if GetLocale() == "deDE" then
 	L.L["M"] = "M"
 	L.L["2M"] = "2M"
 	L.L["3M"] = "3M"
+	L.L["Display Reset. Set to visible, and in the BOTTOMLEFT."] = "Reset anzeigen. Auf sichtbar setzen und unten links platzieren."
 end

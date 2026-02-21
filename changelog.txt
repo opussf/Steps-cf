@@ -1,4 +1,10 @@
-Changes since 2.1.11..
+Changes since 2.1.12..
 
-* 2b94b49 2026-02-12 11:28:41 -0800 -  (HEAD -> master, tag: 2.1.11, origin/master, origin/HEAD) Merge branch 'develop' <opussf>
-* 9c55286 2026-02-12 11:28:06 -0800 -  (origin/develop, develop) Use C_ChatInfo, and update INTERFACE <opussf>
+* 11796d2 2026-02-21 13:34:12 -0800 -  (HEAD -> master, tag: 2.1.12, origin/master, origin/HEAD) Merge branch 'develop' <opussf>
+*   987994e 2026-02-19 17:57:27 -0800 -  (origin/develop, develop) Merge branch 'frameSplit' into develop <opussf>
+|\  
+| * 16b04dc 2026-02-19 17:24:15 -0800 -  (frameSplit) Splitting event frame from display frame <opussf>
+| * 8b32c5b 2026-02-19 17:12:44 -0800 -  FrameSplit <opussf>
+|/  
+* 5c13e0f 2026-02-19 16:55:20 -0800 -  Merge branch 'reset' into develop <opussf>
+* bbeb0fa 2026-02-19 16:54:41 -0800 -  Reset forces show, and barUpdate <opussf>

@@ -48,4 +48,5 @@ if GetLocale() == "ruRU" then
 	L.L["M"] = "М"
 	L.L["2M"] = "2М"
 	L.L["3M"] = "3М"
+	L.L["Display Reset. Set to visible, and in the BOTTOMLEFT."] = "Показать сброс. Установите видимость и расположите внизу слева."
 end

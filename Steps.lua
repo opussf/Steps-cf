@@ -1,4 +1,4 @@
--- Steps 2.1.11
+-- Steps 2.1.12
 STEPS_SLUG, Steps   = ...
 STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -38,15 +38,15 @@ function Steps.OnLoad()
 	SLASH_STEPS1 = "/"..Steps.L["Steps"]
 	SlashCmdList["STEPS"] = function(msg) Steps.Command(msg) end
 	Steps.lastSpeed = 0
-	Steps_Frame:RegisterEvent( "ADDON_LOADED" )
-	Steps_Frame:RegisterEvent( "VARIABLES_LOADED" )
-	Steps_Frame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
-	Steps_Frame:RegisterEvent( "CHAT_MSG_ADDON" )
-	Steps_Frame:RegisterEvent( "GROUP_ROSTER_UPDATE" )
-	Steps_Frame:RegisterEvent( "INSTANCE_GROUP_SIZE_CHANGED" )
+	Steps_EventFrame:RegisterEvent( "ADDON_LOADED" )
+	Steps_EventFrame:RegisterEvent( "VARIABLES_LOADED" )
+	Steps_EventFrame:RegisterEvent( "LOADING_SCREEN_DISABLED" )
+	Steps_EventFrame:RegisterEvent( "CHAT_MSG_ADDON" )
+	Steps_EventFrame:RegisterEvent( "GROUP_ROSTER_UPDATE" )
+	Steps_EventFrame:RegisterEvent( "INSTANCE_GROUP_SIZE_CHANGED" )
 end
 function Steps.ADDON_LOADED()
-	Steps_Frame:UnregisterEvent( "ADDON_LOADED" )
+	Steps_EventFrame:UnregisterEvent( "ADDON_LOADED" )
 	Steps.name = UnitName("player")
 	Steps.realm = GetRealmName()
 	Steps.msgRealm = string.gsub( Steps.realm, " ", "" )
@@ -54,7 +54,7 @@ function Steps.ADDON_LOADED()
 end
 function Steps.VARIABLES_LOADED()
 	-- Unregister the event for this method.
-	Steps_Frame:UnregisterEvent( "VARIABLES_LOADED" )
+	Steps_EventFrame:UnregisterEvent( "VARIABLES_LOADED" )
 
 	Steps_data[Steps.realm] = Steps_data[Steps.realm] or {}
 	Steps_data[Steps.realm][Steps.name] = Steps_data[Steps.realm][Steps.name] or { ["steps"] = 0 }
@@ -63,11 +63,7 @@ function Steps.VARIABLES_LOADED()
 	Steps.min, Steps.ave, Steps.max = Steps.CalcMinAveMax()
 	Steps.totalC = math.floor( Steps.mine.steps / 100 )
 	Steps.Prune()
-	if Steps_options.show then
-		Steps_Frame:SetAlpha(1)
-	else
-		Steps_Frame:SetAlpha(0)
-	end
+	Steps.UpdateBars()
 	if Steps_options.enableChat then
 		Steps.InitChat()
 	end
@@ -412,6 +408,9 @@ function Steps.UIReset()
 	Steps_Frame:SetSize( 200, 12 )
 	Steps_Frame:ClearAllPoints()
 	Steps_Frame:SetPoint("BOTTOMLEFT", "$parent", "BOTTOMLEFT")
+	Steps_options.show = true
+	Steps.UpdateBars()
+	Steps.Print(Steps.L["Display Reset. Set to visible, and in the BOTTOMLEFT."])
 end
 function Steps.DeNormalizeRealm( realm )
 	local realmOut = ""
@@ -504,11 +503,10 @@ function Steps.Post( param )
 end
 function Steps.UpdateBars()
 	if Steps_options.show then
+		Steps_Frame:Show()
 		Steps_Frame:SetAlpha(1)
 	else
-		Steps_StepBar_1:Hide()
-		Steps_StepBar_2:Hide()
-		Steps_Frame:SetAlpha(0)
+		Steps_Frame:Hide()
 	end
 end
 

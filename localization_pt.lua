@@ -48,4 +48,5 @@ if GetLocale() == "ptBR" then
 	L.L["M"] = "M"
 	L.L["2M"] = "2M"
 	L.L["3M"] = "3M"
+	L.L["Display Reset. Set to visible, and in the BOTTOMLEFT."] = "Exibir redefinição. Defina como visível e no canto inferior esquerdo."
 end
