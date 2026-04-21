@@ -1,4 +1,4 @@
--- Steps 2.1.12
+-- Steps 2.2
 STEPS_SLUG, Steps   = ...
 STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -441,9 +441,10 @@ end
 -- Tooltip
 function Steps.TooltipSetUnit( arg1, arg2 ) -- tooltip, tooltipdata
 	local name = GameTooltip:GetUnit()
-	if not issecretvalue( name ) then
+	local mouseoverName = UnitName( "mouseover" )
+	if not issecretvalue( name ) and not issecretvalue(mouseoverName) then
 		local realm = ""
-		if UnitName( "mouseover" ) == name then
+		if mouseoverName == name then
 			_, realm = UnitName( "mouseover" )
 			if not realm then
 				realm = GetRealmName()
