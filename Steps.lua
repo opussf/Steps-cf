@@ -1,4 +1,4 @@
--- Steps 2.2
+-- Steps 2.2.1
 STEPS_SLUG, Steps   = ...
 STEPS_MSG_ADDONNAME = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Title" )
 STEPS_MSG_VERSION   = C_AddOns.GetAddOnMetadata( STEPS_SLUG, "Version" )
@@ -246,6 +246,7 @@ function Steps.OnUpdate()
 		Steps.lastSpeed = 0
 	else
 		speed = GetUnitSpeed("player")
+		if issecretvalue(speed) then speed = 0 end  -- let the addon wars rage somewhere else.
 		if speed>0 and not Steps.isMoving then
 			Steps.isMoving = true
 			Steps.lastSpeed = speed
@@ -439,13 +440,15 @@ function Steps.GetTodayTotal( name, realm )
 	end
 end
 -- Tooltip
-function Steps.TooltipSetUnit( arg1, arg2 ) -- tooltip, tooltipdata
+function Steps.TooltipSetUnit( tooltip, data ) -- tooltip, tooltipdata
+	local unitToken = data.lines[1] and data.lines[1].unitToken
+    if not unitToken or issecretvalue(unitToken) then return end
 	local name = GameTooltip:GetUnit()
-	local mouseoverName = UnitName( "mouseover" )
-	if not issecretvalue( name ) and not issecretvalue(mouseoverName) then
+	local unitName = UnitName( unitToken )
+	if not issecretvalue( name ) and not issecretvalue(unitName) then
 		local realm = ""
-		if mouseoverName == name then
-			_, realm = UnitName( "mouseover" )
+		if unitName == name then
+			_, realm = UnitName( unitToken )
 			if not realm then
 				realm = GetRealmName()
 			end
