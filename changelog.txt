@@ -1,3 +1,3 @@
-Changes since 2.2.1..
+Changes since 2.2.2..
 
-* 752c83c 2026-04-21 17:58:30 -0700 -  (HEAD -> master, tag: 2.2.1, origin/master, origin/HEAD) Removing extra event <opussf>
+* b36ffd4 2026-08-11 16:09:51 -0700 -  (HEAD -> master, tag: 2.2.2, origin/master, origin/HEAD) 120100, stubs, and workflows <opussf>
